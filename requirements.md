@@ -2,25 +2,25 @@
 
 ## Functional Requirements
 
-1. requirement
-2. requirement
-3. requirement
-4. requirement
-5. requirement
-6. requirement
-7. requirement
-8. requirement
-9. requirement
-10. requirement
-11. requirement
-12. requirement
+1. Login
+2. Logout
+3. Create new account
+4. Delete account
+5. Add to Cart *Emma
+6. Buy item
+7. Find item *Emma
+8. Bid on items *Evan
+9. Add item to seller store
+10. Add image to item* *Evan
+11. See all items available from all of the sellers
+12. User profiles
 
 ## Non-functional Requirements
 
-1. non-functional
-2. non-functional
-3. non-functional
-4. non-functional
+1. Consistent cool color theme
+2. System can persist up to 1000 listings
+3. Images can only be of one file type
+4. Posts can have up to 256 characters
 
 ## Use Cases
 
