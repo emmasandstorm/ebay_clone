@@ -59,3 +59,46 @@
   1. The user decides not to place a bid.
   2. The user clicks the cancel button.
   3. The user is redirected to the listing (as appropriate/necessary).
+
+  4. Add an image to a listing when creating that listing
+
+- **Pre-condition:**
+  User must be logged in
+  User must be on the page for creating a listing
+
+- **Trigger:**
+  User presses "Add image" button
+
+- **Primary Sequence:**
+
+  1. System prompts user for an image of the appropriate type and size.
+  2. User submits image and presses upload button
+  3. System validates the file and stores the valid image on the server.
+  4. User is redirected to the listing page, where the image is now displayed
+
+- **Primary Postconditions:**
+  New image is stored in the system, appropriate link to the listing in the database
+
+  OR
+
+  No file is added and listing contains no image
+
+- **Alternate Sequence:**
+
+  1. File is too large
+  2. File is rejected and user is prompted to submit a smaller file
+  3. System validates the file and stores the valid image on the server.
+  4. User is redirected to the listing page, where the image is now displayed
+
+- **Alternate Sequence:**
+
+  1. File is wrong type
+  2. File is rejected and user is prompted to submit a file of the appropriate type
+  3. System validates the file and stores the valid image on the server.
+  4. User is redirected to the listing page, where the image is now displayed
+
+  - **Alternate Sequence:**
+
+  1. User chooses not to submit a file
+  2. User clicks on the cancel button
+  3. User is redirected to the listing page, where the default empty image is displayed
