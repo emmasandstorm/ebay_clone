@@ -151,3 +151,44 @@
   1. User chooses not to submit a file
   2. User clicks on the cancel button
   3. User is redirected to the listing page, where the default empty image is displayed
+
+11. See All Items for Sale
+- **Pre-condition:** None
+
+- **Trigger:** User selects "Shop All" button. 
+
+- **Primary Sequence:**
+  
+  1. System redirects the user to the shop page. Items are displayed in order of being available
+  2. User is able to scroll through all available items
+
+- **Primary Postconditions:** User can log in to actually purchase items from "Shop All"
+
+- **Alternate Sequence:** 
+  
+  1. User logs in as a customer 
+  2. System redirects the user to the shop page. 
+  3. Customer goes to the "Shop All" page and is able to add items to their cart
+
+12. Edit User Profile
+- **Pre-condition:** User must be logged in.
+
+- **Trigger:** User selects "My Profile" button 
+
+- **Primary Sequence:**
+  
+  1. System redirects the user to their personal profile page
+  2. User selects "Edit Display Name" button
+  3. System prompts the user to enter a new display name of less than 30 characters
+  4. User enters their new display name and selects "Save Name"
+  5. System saves their new display name and updates the profile page to show it
+
+- **Primary Postconditions:** The user's profile is updated based on the edits they make
+
+- **Alternate Sequence:** 
+  
+  1. System redirects the user to their personal profile page
+  2. User selects "Edit Bio" button
+  3. System prompts the user to enter a new bio of less than 150 characters
+  4. User enters thier new bio and selects "Save Bio"
+  5. System saves their new display name and updates the profile page to show it
