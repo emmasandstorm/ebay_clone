@@ -1,17 +1,17 @@
 ## Functional Requirements
 
-1. Login *Emma
-2. Logout *Emma
-3. Create new account *Cathy
-4. Delete account *Cathy
-5. Add item to Cart *Emma
-6. Buy item *Evan
-7. Find item *Emma
-8. Bid on items *Evan
-9. Add item to seller store *Evan
-10. Add image to item* *Evan
-11. See all items available from all of the sellers *Cathy
-12. User profiles *Cathy
+1.  Users can login to access their account and to buy, sell, and bid on items \*Emma
+2.  Users can logout \*Emma
+3.  New users can create an account to buy, sell, and bid on items \*Cathy
+4.  Logged in users can delete their account \*Cathy
+5.  Users can add items to a cart to purchase all in one batch \*Emma
+6.  Users can buy items with a credit/debit card \*Evan
+7.  Users can search for item by name or seller \*Emma
+8.  Users can place bids on items listed for auction \*Evan
+9.  Users can list items on the seller store and choose a between a flat price or auction \*Evan
+10. Users can add image to items they list on the store \*Evan
+11. Users can navigate to a page that displays all items available from all sellers \*Cathy
+12. User accounts include user profiles with names and editable biographies \*Cathy
 
 ## Non-functional Requirements
 
@@ -23,6 +23,7 @@
 ## Use Cases
 
 5. Add item to Cart
+
 - **Summary:**
   Customer can select an item and it is added to their cart for purchase later
 
@@ -37,69 +38,70 @@
 
 - **Primary Sequence:**
 
-	1. Intended item is entered into search box
-	2. All entries relevant to the search is displayed
-	3. Customer selects intended item
-	4. Description and image of item is displayed
-	5. Customer selects 'Add to Cart' button
-	6. Item is added to cart for purchase later
+  1.  Intended item is entered into search box
+  2.  All entries relevant to the search is displayed
+  3.  Customer selects intended item
+  4.  Description and image of item is displayed
+  5.  Customer selects 'Add to Cart' button
+  6.  Item is added to cart for purchase later
 
 - **Alternative Sequence:**
 
-	1. Item is not available for purchase
-	2. Error message pops up
-	3. Customer is returned to item description page
+  1.  Item is not available for purchase
+  2.  Error message pops up
+  3.  Customer is returned to item description page
 
 - **Post Conditions:**
-	- Item is in cart and can be viewed and edited
-	- Item is ready for purchase
+
+  - Item is in cart and can be viewed and edited
+  - Item is ready for purchase
 
 - **Non-functional requirements:**
-	- Item added to cart within 1 second
+
+  - Item added to cart within 1 second
 
 - **Glossary:**
-	- customer: a person who is using the ebay clone website to purchase something
-	- cart: the list of items that a customer has compiled to purchase at a later time
-	- item: something that is being sold on the website
+  - customer: a person who is using the ebay clone website to purchase something
+  - cart: the list of items that a customer has compiled to purchase at a later time
+  - item: something that is being sold on the website
 
 7. Find Item
+
 - **Summary:**
   A text entry displays all relevant items
 
 - **Actor:**
-  Customer 
+  Customer
 
 - **Pre-conditions:**
   None
 
-- **trigger:** 
+- **trigger:**
   Submit button is pressed after a text entry is inputted into search bar
 
-- **Primary Sequence:** 
+- **Primary Sequence:**
 
-	1. The item query is entered into the search bar
-	2. The Submit button is pressed
-	3. A query is sent through all available items and looks for keywords from the text entry in item descriptions
-	3. A list of all items containing relevant data to the text query is displayed
+  1.  The item query is entered into the search bar
+  2.  The Submit button is pressed
+  3.  A query is sent through all available items and looks for keywords from the text entry in item descriptions
+  4.  A list of all items containing relevant data to the text query is displayed
 
 - **Alternative Sequence:**
 
         1. Text query does not have any relevant items
-	2. Error message pops up informing customer of issue
-	3. Customer is prompted to enter a more relevant item
 
-- **Post Conditions:**
-        - List of relevant items is displayed
+  2.  Error message pops up informing customer of issue
+  3.  Customer is prompted to enter a more relevant item
+
+- **Post Conditions:** - List of relevant items is displayed
 
 - **Non-functional requirements:**
- 
-        - List is displayed within 2 seconds for each 100 items
-	- Items can be filtered by price or relevance *keywords*
 
-- **Glossary:**
-        - customer: a person who is using the ebay clone website
-        - search bar: text entry box at the top of the page used for searching
-        - item: something that is being sold on the website
+        - List is displayed within 2 seconds for each 100 items
+
+  - Items can be filtered by price or relevance _keywords_
+
+- **Glossary:** - customer: a person who is using the ebay clone website - search bar: text entry box at the top of the page used for searching - item: something that is being sold on the website
 
 8. Bid on listings within auction window.
 
@@ -181,30 +183,32 @@
   3. User is redirected to the listing page, where the default empty image is displayed
 
 11. See All Items for Sale
+
 - **Pre-condition:** None
 
-- **Trigger:** User selects "Shop All" button. 
+- **Trigger:** User selects "Shop All" button.
 
 - **Primary Sequence:**
-  
+
   1. System redirects the user to the shop page. Items are displayed in order of being available
   2. User is able to scroll through all available items
 
 - **Primary Postconditions:** User can log in to actually purchase items from "Shop All"
 
-- **Alternate Sequence:** 
-  
-  1. User logs in as a customer 
-  2. System redirects the user to the shop page. 
+- **Alternate Sequence:**
+
+  1. User logs in as a customer
+  2. System redirects the user to the shop page.
   3. Customer goes to the "Shop All" page and is able to add items to their cart
 
 12. Edit User Profile
+
 - **Pre-condition:** User must be logged in.
 
-- **Trigger:** User selects "My Profile" button 
+- **Trigger:** User selects "My Profile" button
 
 - **Primary Sequence:**
-  
+
   1. System redirects the user to their personal profile page
   2. User selects "Edit Display Name" button
   3. System prompts the user to enter a new display name of less than 30 characters
@@ -213,8 +217,8 @@
 
 - **Primary Postconditions:** The user's profile is updated based on the edits they make
 
-- **Alternate Sequence:** 
-  
+- **Alternate Sequence:**
+
   1. System redirects the user to their personal profile page
   2. User selects "Edit Bio" button
   3. System prompts the user to enter a new bio of less than 150 characters
