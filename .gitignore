@@ -1,0 +1,5 @@
+#Ignore generated python files
+./app/__pycache__*
+
+#Do not store database in version control
+./app/*.db
