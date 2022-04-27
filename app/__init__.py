@@ -1,17 +1,15 @@
 from flask import Flask
-from flask_wtf import FlaskForm
-from wtforms import StringField,  SubmitField
-from wtforms.validators import DataRequired
- 
+from flask_sqlalchemy import SQLAlchemy
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 myobj = Flask(__name__)
-myobj.config['SECRET_KEY'] = 'you-will-never-guess'
+myobj.config.from_mapping(
+    SECRET_KEY="you-will-never-guess",
+    SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(basedir, "app.db"),
+)
 
- 
-class LoginForm(FlaskForm):
-    user_input = StringField('Username', validators=[DataRequired()])
-    pswd_input = StringField('Password', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+db = SQLAlchemy(myobj)
 
 from app import routes
-
