@@ -41,6 +41,11 @@
     {{ form.auction_end.label }}<br />
     {{ form.auction_end}}
   </p>
+  {% if filename %}
+  <div>
+    <img src="{{ url_for('display_image', filename=filename) }}" />
+  </div>
+  {% endif %}
   <p>
     {{ form.image.label }}<br />
     {{ form.image}}

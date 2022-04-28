@@ -4,7 +4,7 @@ from app.forms import ListingForm, LoginForm
 from app.models import Listing
 from app.utils import allowed_file
 from datetime import datetime
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
 
@@ -93,3 +93,7 @@ def display_listing(listing_id):
             price="${:,.2f}".format(price),
         )
     return redirect("/")
+
+@myobj.route("/display/<filename>")
+def display_image(filename):
+    return redirect(url_for("static", filename="images/" + filename))
