@@ -19,6 +19,8 @@
 2. System can persist up to 1000 listings
 3. Images can only be of one file type
 4. Posts can have up to 256 characters
+5. Buying and selling does not include cents
+6. Auctions begin when a listing is made and end at 11:59PM UTC on the day the lister specifies.
 
 ## Use Cases
 
