@@ -16,5 +16,13 @@
       {{ form.description.label }}<br />
       {{ form.description(size=256) }}
     </p>
+    <p>
+        {{ form.for_purchase.label }}<br />
+        {{ form.for_purchase }}
+    </p>
+    <p>
+        {{ form.purchase_price.label }}<br />
+        {{ form.purchase_price }}
+    </p>
     <p>{{ form.submit() }}</p>
   </form>

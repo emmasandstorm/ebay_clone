@@ -16,6 +16,12 @@ class Listing(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     title = db.Column(db.String(128))
     description = db.Column(db.String(256))
+    for_purchase = db.Column(db.Boolean, default=False)
+    purchase_price = db.Column(
+        db.Integer
+    )  # Dollars only, working with cents presents too many questions
+    # for_auction
+    # bids
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 

@@ -24,7 +24,12 @@ def upload_form():
     form = ListingForm()
 
     if form.validate_on_submit():
-        l = Listing(title=form.title.data, description=form.description.data)
+        l = Listing(
+            title=form.title.data,
+            description=form.description.data,
+            for_purchase=form.for_purchase.data,
+            purchase_price=form.purchase_price.data,
+        )
         db.session.add(l)
         db.session.commit()
     return render_template("newlisting.html", title="New Listing", form=form)
