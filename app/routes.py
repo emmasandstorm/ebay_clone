@@ -56,7 +56,7 @@ def display_listing(listing_id):
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
-            listing_title=listing.title,
+            listing=listing.title,
             description=listing.description,
             for_purchase=listing.for_purchase,
             price="${:,.2f}".format(price),
