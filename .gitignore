@@ -2,4 +2,4 @@
 app/__pycache__/*
 
 #Do not store database in version control
-./app/*.db
+app/*.db
