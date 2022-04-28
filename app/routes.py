@@ -20,7 +20,7 @@ def login():
 
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
-def upload_form():
+def new_listing():
     form = ListingForm()
 
     if form.validate_on_submit():
@@ -33,3 +33,21 @@ def upload_form():
         db.session.add(l)
         db.session.commit()
     return render_template("newlisting.html", title="New Listing", form=form)
+
+
+@myobj.route("/listing/<listing_id>")
+def display_listing(listing_id):
+    listing = Listing.query.filter_by(id=listing_id).first()
+    if listing is not None:
+        price = listing.purchase_price
+        if price is None:
+            price = 0
+        return render_template(
+            "listing.html",
+            title=f"Listing {listing_id}",
+            listing_title=listing.title,
+            description=listing.description,
+            for_purchase=listing.for_purchase,
+            price="${:,.2f}".format(price),
+        )
+    return redirect("/")
