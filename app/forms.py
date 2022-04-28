@@ -1,5 +1,6 @@
+from app.validators import RequiredIf
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, IntegerField, StringField, SubmitField
+from wtforms import BooleanField, IntegerField, DateField, StringField, SubmitField
 from wtforms.validators import DataRequired, NumberRange, Optional
 
 
@@ -22,4 +23,6 @@ class ListingForm(FlaskForm):
             ),
         ],
     )
+    for_auction = BooleanField("Accept Bids")
+    auction_end = DateField("Until", validators=[RequiredIf(for_auction=True)])
     submit = SubmitField("Create Listing")

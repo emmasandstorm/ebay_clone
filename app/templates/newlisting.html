@@ -2,6 +2,17 @@
   {{ ', '.join(errors) }}
 {% endfor %}
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+  </ul>
+  {% endif %}
+{% endwith %}
+
+
 <title>{{title}}</title>
 
 <h1>{{title}}</h1>
@@ -18,25 +29,36 @@
     </p>
     <p>
         {{ form.for_purchase.label }}<br />
-        {{ form.for_purchase(onchange="promptPrice()") }}
+        {{ form.for_purchase(onchange="promptInput('for_purchase','price_prompt','purchase_price')") }}
     </p>
     <p id="price_prompt">
         {{ form.purchase_price.label }}<br />
         {{ form.purchase_price }}
     </p>
+    <p>
+        {{ form.for_auction.label }}<br />
+        {{ form.for_auction(onchange="promptInput('for_auction','date_prompt','auction_end')") }}
+    </p>
+    <p id="date_prompt">
+        {{ form.auction_end.label }}<br />
+        {{ form.auction_end}}
+    </p>
+    
+
     <p>{{ form.submit() }}</p>
   </form>
 
   <script>
-    function promptPrice(){
-      const checked = document.getElementById('for_purchase').checked
+    function promptInput(bool_id,hide_id, disabled_id){
+      const checked = document.getElementById(bool_id).checked
       if (checked){
-        document.getElementById('price_prompt').hidden = false
-        document.getElementById('purchase_price').disabled = false
+        document.getElementById(hide_id).hidden = false
+        document.getElementById(disabled_id).disabled = false
       } else {
-        document.getElementById('price_prompt').hidden = true
-        document.getElementById('purchase_price').disabled = true
+        document.getElementById(hide_id).hidden = true
+        document.getElementById(disabled_id).disabled = true
       }
     }
-    promptPrice()
+    promptInput('for_purchase','price_prompt','purchase_price')
+    promptInput('for_auction','date_prompt','auction_end')
 </script>

@@ -20,9 +20,10 @@ class Listing(db.Model):
     purchase_price = db.Column(
         db.Integer
     )  # Dollars only, working with cents presents too many questions
-    # for_auction
-    # bids
+    for_auction = db.Column(db.Boolean, default=False)
+    auction_end = db.Column(db.DateTime)
 
+    # bids
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):

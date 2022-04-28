@@ -2,6 +2,7 @@ from app import db
 from app import myobj
 from app.forms import ListingForm, LoginForm
 from app.models import Listing
+from datetime import datetime
 from flask import render_template, request, flash, redirect
 
 
@@ -24,11 +25,21 @@ def new_listing():
     form = ListingForm()
 
     if form.validate_on_submit():
+        if form.for_auction.data is True:
+            if form.auction_end.data is None:
+                flash("End date is empty, validator not working")
+                return redirect(request.url)
+            if form.auction_end.data <= datetime.utcnow().date():
+                flash("Auction must end in the future.")
+                return redirect(request.url)
+
         l = Listing(
             title=form.title.data,
             description=form.description.data,
             for_purchase=form.for_purchase.data,
             purchase_price=form.purchase_price.data,
+            for_auction=form.for_auction.data,
+            auction_end=form.auction_end.data,
         )
         db.session.add(l)
         db.session.commit()
