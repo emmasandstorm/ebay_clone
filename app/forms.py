@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, IntegerField, StringField, SubmitField
-from wtforms.validators import DataRequired, NumberRange
+from wtforms.validators import DataRequired, NumberRange, Optional
 
 
 class LoginForm(FlaskForm):
@@ -16,9 +16,10 @@ class ListingForm(FlaskForm):
     purchase_price = IntegerField(
         "Purchase Price",
         validators=[
+            Optional(),
             NumberRange(
                 min=0, max=1000000, message="Price must be between 0 and 1000000."
-            )
+            ),
         ],
     )
     submit = SubmitField("Create Listing")

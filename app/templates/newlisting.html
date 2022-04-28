@@ -18,11 +18,25 @@
     </p>
     <p>
         {{ form.for_purchase.label }}<br />
-        {{ form.for_purchase }}
+        {{ form.for_purchase(onchange="promptPrice()") }}
     </p>
-    <p>
+    <p id="price_prompt">
         {{ form.purchase_price.label }}<br />
         {{ form.purchase_price }}
     </p>
     <p>{{ form.submit() }}</p>
   </form>
+
+  <script>
+    function promptPrice(){
+      const checked = document.getElementById('for_purchase').checked
+      if (checked){
+        document.getElementById('price_prompt').hidden = false
+        document.getElementById('purchase_price').disabled = false
+      } else {
+        document.getElementById('price_prompt').hidden = true
+        document.getElementById('purchase_price').disabled = true
+      }
+    }
+    promptPrice()
+</script>
