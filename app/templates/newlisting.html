@@ -1,64 +1,64 @@
-{% for field, errors in form.errors.items() %}
-  {{ ', '.join(errors) }}
-{% endfor %}
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
+{% for field, errors in form.errors.items() %} {{ ', '.join(errors) }} {% endfor
+%} {% with messages = get_flashed_messages() %} {% if messages %}
+<ul>
   {% for message in messages %}
-    <li>{{ message }}</li>
+  <li>{{ message }}</li>
   {% endfor %}
-  </ul>
-  {% endif %}
-{% endwith %}
-
+</ul>
+{% endif %} {% endwith %}
 
 <title>{{title}}</title>
 
 <h1>{{title}}</h1>
 
 <form action="" method="post" novalidate enctype="multipart/form-data">
-    {{ form.hidden_tag() }}
-    <p>
-      {{ form.title.label }}<br />
-      {{ form.title(size=128) }}
-    </p>
-    <p>
-      {{ form.description.label }}<br />
-      {{ form.description(size=256) }}
-    </p>
-    <p>
-        {{ form.for_purchase.label }}<br />
-        {{ form.for_purchase(onchange="promptInput('for_purchase','price_prompt','purchase_price')") }}
-    </p>
-    <p id="price_prompt">
-        {{ form.purchase_price.label }}<br />
-        {{ form.purchase_price }}
-    </p>
-    <p>
-        {{ form.for_auction.label }}<br />
-        {{ form.for_auction(onchange="promptInput('for_auction','date_prompt','auction_end')") }}
-    </p>
-    <p id="date_prompt">
-        {{ form.auction_end.label }}<br />
-        {{ form.auction_end}}
-    </p>
-    
+  {{ form.hidden_tag() }}
+  <p>
+    {{ form.title.label }}<br />
+    {{ form.title(size=128) }}
+  </p>
+  <p>
+    {{ form.description.label }}<br />
+    {{ form.description(size=256) }}
+  </p>
+  <p>
+    {{ form.for_purchase.label }}<br />
+    {{
+    form.for_purchase(onchange="promptInput('for_purchase','price_prompt','purchase_price')")
+    }}
+  </p>
+  <p id="price_prompt">
+    {{ form.purchase_price.label }}<br />
+    {{ form.purchase_price }}
+  </p>
+  <p>
+    {{ form.for_auction.label }}<br />
+    {{
+    form.for_auction(onchange="promptInput('for_auction','date_prompt','auction_end')")
+    }}
+  </p>
+  <p id="date_prompt">
+    {{ form.auction_end.label }}<br />
+    {{ form.auction_end}}
+  </p>
+  <p>
+    {{ form.image.label }}<br />
+    {{ form.image}}
+  </p>
+  <p>{{ form.submit() }}</p>
+</form>
 
-    <p>{{ form.submit() }}</p>
-  </form>
-
-  <script>
-    function promptInput(bool_id,hide_id, disabled_id){
-      const checked = document.getElementById(bool_id).checked
-      if (checked){
-        document.getElementById(hide_id).hidden = false
-        document.getElementById(disabled_id).disabled = false
-      } else {
-        document.getElementById(hide_id).hidden = true
-        document.getElementById(disabled_id).disabled = true
-      }
+<script>
+  function promptInput(bool_id, hide_id, disabled_id) {
+    const checked = document.getElementById(bool_id).checked;
+    if (checked) {
+      document.getElementById(hide_id).hidden = false;
+      document.getElementById(disabled_id).disabled = false;
+    } else {
+      document.getElementById(hide_id).hidden = true;
+      document.getElementById(disabled_id).disabled = true;
     }
-    promptInput('for_purchase','price_prompt','purchase_price')
-    promptInput('for_auction','date_prompt','auction_end')
+  }
+  promptInput('for_purchase', 'price_prompt', 'purchase_price');
+  promptInput('for_auction', 'date_prompt', 'auction_end');
 </script>
