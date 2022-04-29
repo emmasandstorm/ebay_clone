@@ -1,6 +1,6 @@
 from app import db
 from app import myobj
-from app.forms import ListingForm, LoginForm
+from app.forms import CreditCardForm, ListingForm, LoginForm
 from app.models import Listing
 from datetime import datetime
 from flask import render_template, request, flash, redirect
@@ -62,3 +62,26 @@ def display_listing(listing_id):
             price="${:,.2f}".format(price),
         )
     return redirect("/")
+
+@myobj.route("/checkout", methods=["GET", "POST"])
+def checkout():
+    form = CreditCardForm()
+
+    if form.validate_on_submit():
+        expire_year = 2000 + form.expire_year.data
+        today = datetime.today()
+        if expire_year < today.year or (expire_year == today.year and form.expire_month.data < today.month):
+            flash("Card is expired, submit another card")
+        try:
+            cc_number = int(form.number.data)
+        except ValueError:
+            flash("Entered an invalid credit card number.")
+        try:
+            cvv = int(form.cvv.data)
+        except ValueError:
+            flash("Entered an invalid CVV number.")
+    return render_template(
+        "checkout.html",
+        title="Checkout",
+        form=form,
+    )
