@@ -91,8 +91,10 @@ def display_listing(listing_id):
             description=listing.description,
             for_purchase=listing.for_purchase,
             price="${:,.2f}".format(price),
+            filename=listing.image,
         )
     return redirect("/")
+
 
 @myobj.route("/display/<filename>")
 def display_image(filename):
