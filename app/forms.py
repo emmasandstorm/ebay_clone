@@ -5,8 +5,8 @@ from wtforms.validators import DataRequired, NumberRange, Optional
 
 
 class LoginForm(FlaskForm):
-    user_input = StringField("Username", validators=[DataRequired()])
-    pswd_input = StringField("Password", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
+    password = StringField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
