@@ -80,3 +80,7 @@ def display_listing(listing_id):
             price="${:,.2f}".format(price),
         )
     return redirect("/")
+
+@myobj.route("/cart")
+def display_cart():
+    return render_template("cart.html")
