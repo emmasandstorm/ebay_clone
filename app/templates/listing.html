@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %} {{title}} {% endblock%}
+{% block content %}
+<!doctype html>
 {% with messages = get_flashed_messages() %} {% if messages %}
 <ul>
   {% for message in messages %}
@@ -21,3 +24,4 @@
   </div>
   {% endif %}
 </body>
+{% endblock %}

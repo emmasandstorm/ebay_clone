@@ -1,13 +1,19 @@
-{% for field, errors in form.errors.items() %} {{ ', '.join(errors) }} {% endfor
-%} {% with messages = get_flashed_messages() %} {% if messages %}
-<ul>
+{% extends "base.html" %}
+{% block title %} {{title}} {% endblock%}
+{% block content %}
+
+{% for field, errors in form.errors.items() %}
+  {{ ', '.join(errors) }}
+{% endfor %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
   {% for message in messages %}
   <li>{{ message }}</li>
   {% endfor %}
 </ul>
 {% endif %} {% endwith %}
-
-<title>{{title}}</title>
 
 <h1>{{title}}</h1>
 
@@ -63,7 +69,7 @@
       document.getElementById(hide_id).hidden = true;
       document.getElementById(disabled_id).disabled = true;
     }
-  }
-  promptInput('for_purchase', 'price_prompt', 'purchase_price');
-  promptInput('for_auction', 'date_prompt', 'auction_end');
+    promptInput('for_purchase','price_prompt','purchase_price')
+    promptInput('for_auction','date_prompt','auction_end')
 </script>
+{% endblock %}

@@ -1,12 +1,14 @@
 from app import db
 from app import myobj
 from app.forms import ListingForm, LoginForm
-from app.models import Listing
+from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
+from flask_login import login_user, logout_user, login_required
 from flask import render_template, request, flash, redirect, url_for
 import os
 from werkzeug.utils import secure_filename
+
 
 @myobj.route("/")
 def home():
@@ -17,10 +19,27 @@ def home():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        flash(form.user_input.data)
-        return redirect("/")
+        username = form.username.data
+        user = User.query.filter_by(username=username).first()
+        print('hi')
+        if user:
+            if user.check_password(form.password.data):
+                flash("Successful Login!!")
+                login_user(user)
+                return redirect("/")
+            else:
+                flash("Incorrect Password")
+        else:
+            flash("Failed login")
+            print('hello')
+        
     return render_template("login.html", form=form)
 
+@myobj.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/login")
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
 def new_listing():
@@ -94,8 +113,13 @@ def display_listing(listing_id):
             filename=listing.image,
         )
     return redirect("/")
-
+  
 
 @myobj.route("/display/<filename>")
 def display_image(filename):
     return redirect(url_for("static", filename="images/" + filename))
+
+  
+@myobj.route("/cart")
+def display_cart():
+    return render_template("cart.html")

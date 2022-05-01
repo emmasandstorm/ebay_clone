@@ -20,3 +20,20 @@ designated weekly meetings are Thursdays at
 
 - next steps will be discussed at next meeting
 
+## 2022-04-26 at 17:00
+- all three members attended
+- discuss what we want to have completed by May 3rd deadline
+	We will all try to complete all of our requirements by May 3rd
+	--- placing bids will be on the back burner
+	--- search for items will also be on back burner
+	--- cosmetics will be done together after may 3rd
+- set up gantt chart
+- Evan gave some tips for our requirements so we were all on the same page
+- next meeting will be Sunday May 1st at 5pm
+
+## 2022-04-28 at 13:30
+- all three members attended
+- Evan helped Emma and Cathy download Visual Studio Code
+- Emma worked on Login and logout
+- set up time for next meeting
+- discussed user interface/desgin of website
