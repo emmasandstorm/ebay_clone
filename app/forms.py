@@ -26,3 +26,12 @@ class ListingForm(FlaskForm):
     for_auction = BooleanField("Accept Bids")
     auction_end = DateField("Until", validators=[RequiredIf(for_auction=True)])
     submit = SubmitField("Create Listing")
+
+#trying it just as an HTML form
+'''class AddtoCart(FlaskForm):
+    # for now, quantity is too much
+    quantity = IntegerField(
+        "quantity",
+        validators=[NumberRange(min=1, max=None, message=None)]
+    )
+    submit = SubmitField("Add to Cart")'''

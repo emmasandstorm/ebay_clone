@@ -1,20 +1,60 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Cart {% endblock%}
 {% block content %} 
-<!DOCTYPE html>
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Item Number</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+            </thead>
+            <tbody>
+                {% for key, item in session['Shoppingcart'].items() %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>${{item.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    {% set subtotal = item.quantity|int * item.price %}
+                    <td>${{subtotal}}</td>
+                    <td><a href="{{url_for('removeitem', id=key)}}" class='btn btn-sm btn-danger'>Remove</a></td>
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>
+                  
+            <p>Grand Total: ${{grandtotal}}</p>
+       
+            <p><a href="/cart">Checkout</a></p>
+       
+            <p><button class="btn btn-sm btn-warning" type="button" action ="/">Continue Shopping</button></p>
+        
+    </div>
+</div>
+
+<!--<!DOCTYPE html>
 <html>
     <head>
         <h1>View your cart</h1>
         <link rel="stylesheet" type="css" href='static/cartformats.css'>
-        <!-- used from https://github.com/WebDevSimplified/Introduction-to-Web-Development/tree/master/Introduction%20to%20JavaScript/Lesson%201-->
+        used from https://github.com/WebDevSimplified/Introduction-to-Web-Development/tree/master/Introduction%20to%20JavaScript/Lesson%201
         <script src="static/cart.js">  async</script>
     </head>
-        <section class="container content-section">
+        
+    
+    <section class="container content-section">
             <h2 class="section-header">MERCH</h2>
             <div class="shop-items">
                 <div class="shop-item">
                     <span class="shop-item-title">T-Shirt</span>
-                    <!--<img class="shop-item-image" src="Images/Shirt.png">-->
+                    <img class="shop-item-image" src="Images/Shirt.png">
                     <div class="shop-item-details">
                         <span class="shop-item-price">$19.99</span>
                         <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
@@ -22,7 +62,7 @@
                 </div>
                 <div class="shop-item">
                     <span class="shop-item-title">Coffee Cup</span>
-                    <!--<img class="shop-item-image" src="Images/Cofee.png">-->
+                    <img class="shop-item-image" src="Images/Cofee.png">
                     <div class="shop-item-details">
                         <span class="shop-item-price">$6.99</span>
                         <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
@@ -47,6 +87,6 @@
         </section>
     
 
-</html>
+</html>-->
 
 {% endblock %}

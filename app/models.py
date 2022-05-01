@@ -7,6 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -32,9 +33,31 @@ class Listing(db.Model):
 
     # bids
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    # relationship with cart
+    #cart = db.relationship('Cart', backref='Listing', lazy ='subquery')
+    #purchased = db.Column(db.Boolean, db.ForeignKey('cart.purchase_status'))
 
     def __repr__(self):
         return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {self.user_id}>"
+'''
+cart_listings = db.Table('Listings',
+    db.Column('listing_title', db.String(128), db.ForeignKey('Listing.title')),
+    db.Column('listing_price', db.Integer, db.ForeignKey('listing.purchase_price')),
+    db.Column('listing_description', db.String(256), db.ForeignKey('listing.description'))
+    )
+
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    cart_listings = db.relationship('Listing', secondary=cart_listings, lazy='subquery',
+        backref=db.backref('carts', lazy=True))
+    #title = db.Column(db.String(128), db.ForeignKey('listing.title'))
+    #description = db.Column(db.String(256), db.ForeignKey('listing.description'))
+    #price = db.Column(db.Integer, db.ForeignKey('listing.purchase_price'))
+    purchase_status = db.Column(db.Boolean, default = False)
+    #If a listing is purchased, then the listing gets updated
+    purchased = db.relationship('Listing', backref='Cart', lazy='dynamic')'''
+
 
 
 """class Cart():
