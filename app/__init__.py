@@ -8,6 +8,8 @@ myobj = Flask(__name__)
 myobj.config.from_mapping(
     SECRET_KEY="you-will-never-guess",
     SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(basedir, "app.db"),
+    UPLOAD_FOLDER='app/static/images',
+    MAX_CONTENT_LENGTH = 5*1024*1024
 )
 
 db = SQLAlchemy(myobj)
