@@ -84,6 +84,6 @@ def display_listing(listing_id):
         )
     return redirect("/")
 
-@myobj.route("/cart")
+@myobj.route("/cart", methods=["GET", "POST"])
 def display_cart():
     return render_template("cart.html")
