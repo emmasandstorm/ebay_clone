@@ -1,7 +1,7 @@
 from app import db
 from app import myobj
 from app.forms import CreditCardForm, ListingForm, LoginForm
-from app.models import Listing
+from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
 from flask_login import login_user, logout_user, login_required
@@ -21,7 +21,6 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         user = User.query.filter_by(username=username).first()
-        print('hi')
         if user:
             if user.check_password(form.password.data):
                 flash("Successful Login!!")
@@ -31,9 +30,9 @@ def login():
                 flash("Incorrect Password")
         else:
             flash("Failed login")
-            print('hello')
-        
+
     return render_template("login.html", form=form)
+
 
 @myobj.route("/logout")
 @login_required
@@ -41,12 +40,13 @@ def logout():
     logout_user()
     return redirect("/login")
 
+
 @myobj.route("/newlisting", methods=["GET", "POST"])
 def new_listing():
     form = ListingForm()
 
     if form.validate_on_submit():
-        #Handle auction data
+        # Handle auction data
         if form.for_auction.data is True:
             if not form.auction_end.data:
                 flash("End date is empty, validator not working")
@@ -56,7 +56,7 @@ def new_listing():
                 flash("Auction must end in the future.")
                 return redirect(request.url)
 
-        #Handle image upload
+        # Handle image upload
         if not form.image.data:
             flash("Please select an image")
             return redirect(request.url)
@@ -82,7 +82,7 @@ def new_listing():
                 purchase_price=form.purchase_price.data,
                 for_auction=form.for_auction.data,
                 auction_end=form.auction_end.data,
-                image=filename
+                image=filename,
             )
             db.session.add(l)
             db.session.commit()
@@ -122,7 +122,9 @@ def checkout():
     if form.validate_on_submit():
         expire_year = 2000 + form.expire_year.data
         today = datetime.today()
-        if expire_year < today.year or (expire_year == today.year and form.expire_month.data < today.month):
+        if expire_year < today.year or (
+            expire_year == today.year and form.expire_month.data < today.month
+        ):
             flash("Card is expired, submit another card")
         try:
             cc_number = int(form.number.data)
