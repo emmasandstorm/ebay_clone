@@ -35,3 +35,16 @@ class Listing(db.Model):
 
     def __repr__(self):
         return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {self.user_id}>"
+
+
+"""class Cart():
+    id
+    user_id (column)
+    listings (relationship)
+    It occurs to me that for this to work we will actually need to update the listing to have a cart value
+    When someone clicks add to cart, this listing itself gets updated. 
+    That cart value could be unique, making it so adding something to your cart gives you exclusive rights to buy it
+    In the wild that might be a problem, but for this application I think that's the best move
+    Alternatively the "listings" section could be a string that we concatenate with ids when the user presses buttons
+    I think that approach is a little hackier/messier, but may be worthwhile
+    There may be a third way to do this that I'm not seeing, but """
