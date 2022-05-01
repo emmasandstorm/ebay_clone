@@ -19,7 +19,7 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         user = User.query.filter_by(username=username).first()
-        print('hi')
+        print("hi")
         if user:
             if user.check_password(form.password.data):
                 flash("Successful Login!!")
@@ -29,10 +29,9 @@ def login():
                 flash("Incorrect Password")
         else:
             flash("Failed login")
-            print('hello')
-        
-    return render_template("login.html", form=form)
+            print("hello")
 
+    return render_template("login.html", form=form)
 
 
 @myobj.route("/logout")
@@ -40,6 +39,7 @@ def login():
 def logout():
     logout_user()
     return redirect("/login")
+
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
 def new_listing():
@@ -82,8 +82,11 @@ def display_listing(listing_id):
             for_purchase=listing.for_purchase,
             price="${:,.2f}".format(price),
         )
+        """Purchase button would go here, make changes to db."""
     return redirect("/")
+
 
 @myobj.route("/cart", methods=["GET", "POST"])
 def display_cart():
+    """Button in cart would direct user to checkout page"""
     return render_template("cart.html")
