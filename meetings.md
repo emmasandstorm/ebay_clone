@@ -37,3 +37,12 @@ designated weekly meetings are Thursdays at
 - Emma worked on Login and logout
 - set up time for next meeting
 - discussed user interface/desgin of website
+
+## 2022-04-30 at 22:30
+- Impromptu meeting between Emma and Evan
+- Emma needed some assistance on add to cart functionality
+	- successful discussion
+	- we got the code working
+	- discussed generic method for add to cart functionality
+	
+
