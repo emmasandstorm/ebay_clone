@@ -1,3 +1,4 @@
+from sqlalchemy import true
 from app import db
 from app import myobj
 from app.forms import ListingForm, LoginForm
@@ -31,6 +32,8 @@ def login():
             print('hello')
         
     return render_template("login.html", form=form)
+
+
 
 @myobj.route("/logout")
 @login_required
