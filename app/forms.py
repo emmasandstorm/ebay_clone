@@ -1,13 +1,14 @@
 from wsgiref.validate import validator
 from app.validators import RequiredIf
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import BooleanField, IntegerField, DateField, SelectField, StringField, SubmitField
 from wtforms.validators import DataRequired, Length, NumberRange, Optional
 
 
 class LoginForm(FlaskForm):
-    user_input = StringField("Username", validators=[DataRequired()])
-    pswd_input = StringField("Password", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
+    password = StringField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
@@ -26,6 +27,7 @@ class ListingForm(FlaskForm):
     )
     for_auction = BooleanField("Accept Bids")
     auction_end = DateField("Until", validators=[RequiredIf(for_auction=True)])
+    image = FileField("Image", validators=[FileRequired()])
     submit = SubmitField("Create Listing")
 
 class CreditCardForm(FlaskForm):
