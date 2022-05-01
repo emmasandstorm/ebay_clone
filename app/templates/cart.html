@@ -4,52 +4,46 @@
 <html>
     <head>
         <h1>View your cart</h1>
-        <link rel="stylesheet" href="./cartformats.css" />
-        <!-- used from https://uxplanet.org/how-to-create-a-shopping-cart-ui-using-html-css-e5db3cd55aa0-->
+        <link rel="stylesheet" href="static/cartformats.css">
+        <!-- used from https://github.com/WebDevSimplified/Introduction-to-Web-Development/tree/master/Introduction%20to%20JavaScript/Lesson%201-->
+        <script src="cart.js"> async</script>
     </head>
-    <body>
-        <div class="CartContainer">
-               <div class="Header">
-                   <h3 class="Heading">Shopping Cart</h3>
-                   <h5 class="Action">Remove all</h5>
-               </div>
-     
-               <div class="Cart-Items">
-                     <div class="image-box">
-                         <img src="images/apple.png"  height="120px" />
-                     </div>
-                     <div class="about">
-                         <h1 class="title">Apple Juice</h1>
-                         <h3 class="subtitle">250ml</h3>
-                     </div>
-                     <div class="counter">
-                         <div class="btn">+</div>
-                         <div class="count">2</div>
-                         <div class="btn">-</div>
-                     </div>
-                     <div class="prices">
-                         <div class="amount">$2.99</div>
-                         <div class="save"><u>Save for later</u></div>
-                         <div class="remove"><u>Remove</u></div>
-                     </div>
-               </div>
-     
-               
-             <hr> 
-             <div class="checkout">
-             <div class="total">
-                 <div>
-                     <div class="Subtotal">Sub-Total</div>
-                     <div class="items">2 items</div>
-                 </div>
-                 <div class="total-amount">$6.18</div>
-             </div>
-             <button class="button">Checkout</button></div>
-        </div>
-     </body>
-     </html>
-     
-     
+        <section class="container content-section">
+            <h2 class="section-header">MERCH</h2>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">T-Shirt</span>
+                    <!--<img class="shop-item-image" src="Images/Shirt.png">-->
+                    <div class="shop-item-details">
+                        <span class="shop-item-price">$19.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Coffee Cup</span>
+                    <!--<img class="shop-item-image" src="Images/Cofee.png">-->
+                    <div class="shop-item-details">
+                        <span class="shop-item-price">$6.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container content-section">
+            <h2 class="section-header">CART</h2>
+            <div class="cart-row">
+                <span class="cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-items">
+            </div>
+            <div class="cart-total">
+                <strong class="cart-total-title">Total</strong>
+                <span class="cart-total-price">$0</span>
+            </div>
+            <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+        </section>
     
 
 </html>
