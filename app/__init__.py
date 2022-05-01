@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -8,10 +9,12 @@ myobj = Flask(__name__)
 myobj.config.from_mapping(
     SECRET_KEY="you-will-never-guess",
     SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(basedir, "app.db"),
-    UPLOAD_FOLDER='app/static/images',
-    MAX_CONTENT_LENGTH = 5*1024*1024
+    UPLOAD_FOLDER="app/static/images",
+    MAX_CONTENT_LENGTH=5 * 1024 * 1024,
 )
 
 db = SQLAlchemy(myobj)
+login = LoginManager(myobj)
+login.login_view = "/login"
 
 from app import routes
