@@ -79,41 +79,50 @@ def display_listing(listing_id):
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
-            listing = listing,
+            listing=listing,
             description=listing.description,
             for_purchase=listing.for_purchase,
-            price="${:,.2f}".format(price)
+            price="${:,.2f}".format(price),
         )
 
     return redirect("/")
+
 
 def MergeDicts(dict1, dict2):
     if isinstance(dict1, list) and isinstance(dict2, list):
         return dict1 + dict2
     elif isinstance(dict1, dict) and isinstance(dict2, dict):
-        return dict(list(dict1.items()+list(dict2.items)))
+        return dict(list(dict1.items()) + list(dict2.items()))
     return False
 
-@myobj.route("/addcart", methods = ['POST'])
-def AddCart():
-        listing_id = request.form.get('listing_id')
-        quantity = int(request.form.get('quantity'))
-        product = Listing.query.filter_by(id=listing_id).first()
-        if listing_id and quantity and request.method =="POST":
-            CartItems = {listing_id:{'name':product.title, 'price':product.purchase_price, 
-                'description': product.description, 'quantity': quantity}}
-            if "Shoppingcart" in session:
-                print(session["Shoppingcart"])
-                if listing_id in session['Shoppingcart']:
-                    print("This product is already in your cart")
-                else:
-                    session["Shoppingcart"] = MergeDicts(session('Shoppingcart'), CartItems)
-                    return("/cart")
-            else:
-                session['Shoppingcart'] = CartItems
-                return redirect("/cart")
 
-        return redirect("/")
+@myobj.route("/addcart", methods=["POST"])
+def AddCart():
+    listing_id = request.form.get("listing_id")
+    quantity = int(request.form.get("quantity"))
+    product = Listing.query.filter_by(id=listing_id).first()
+    if listing_id and quantity and request.method == "POST":
+        CartItems = {
+            listing_id: {
+                "name": product.title,
+                "price": product.purchase_price,
+                "description": product.description,
+                "quantity": quantity,
+            }
+        }
+        if "Shoppingcart" in session:
+            print(session["Shoppingcart"])
+            if listing_id in session["Shoppingcart"]:
+                flash("This product is already in your cart")
+                return redirect(request.referrer)
+            else:
+                session["Shoppingcart"] = MergeDicts(session["Shoppingcart"], CartItems)
+                return redirect("/cart")
+        else:
+            session["Shoppingcart"] = CartItems
+            return redirect("/cart")
+
+    return redirect("/")
 
 
 @myobj.route("/cart", methods=["GET", "POST"])
@@ -121,22 +130,24 @@ def display_cart():
     if "Shoppingcart" not in session:
         return redirect("/")
     grandtotal = 0
-    for key, item in session['Shoppingcart'].items():
-        grandtotal += float(item['price'])
-    return render_template("cart.html", total = session['Shoppingcart'], grandtotal=grandtotal)
+    for key, item in session["Shoppingcart"].items():
+        grandtotal += float(item["price"])
+    return render_template(
+        "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
+    )
+
 
 @myobj.route("/removecartitem/<int:id>")
 def removeitem(id):
-    if 'Shoppingcart' not in session and len(session['Shoppingcart']) <= 0:
+    if "Shoppingcart" not in session and len(session["Shoppingcart"]) <= 0:
         return redirect("/")
     try:
         session.modified = True
-        for key, item in session['Shoppingcart'].items():
+        for key, item in session["Shoppingcart"].items():
             if int(key) == id:
-                session['Shoppingcart'].pop(key, None)
-                return redirect('/cart')
+                session["Shoppingcart"].pop(key, None)
+                return redirect("/cart")
         pass
     except Exception as e:
         print(e)
-        return redirect('/cart')
-    
+        return redirect("/cart")
