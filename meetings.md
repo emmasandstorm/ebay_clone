@@ -37,3 +37,18 @@ designated weekly meetings are Thursdays at
 - Emma worked on Login and logout
 - set up time for next meeting
 - discussed user interface/desgin of website
+
+## 2022-04-30 at 22:30
+- Impromptu meeting between Emma and Evan
+- Emma needed some assistance on add to cart functionality
+	- successful discussion
+	- we got the code working
+	- discussed generic method for add to cart functionality
+
+## 2022-05-01 at 16:00
+- another impromptu meeting between Emma and Evan
+- Emma needed another input on debugging the add to cart functionality
+	- Evan made the changes while they discussed over discord because Emma's computer cannot handle both discord and VMware
+	- changes were made together
+- finally got add to cart and remove cart fully functional!!
+

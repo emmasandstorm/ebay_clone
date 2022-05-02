@@ -1,11 +1,46 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Cart {% endblock%}
 {% block content %} 
-<html>
-    <head>
-        <h1>View your cart</h1>
-    </head>
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Item Number</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+                <th>Remove</th>
+            </thead>
+            <tbody>
+                {% for key, item in session['Shoppingcart'].items() %}
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>${{item.price}}</td>
+                    <td>{{item.quantity}}</td>
+                    {% set subtotal = item.quantity|int * item.price %}
+                    <td>${{subtotal}}</td>
+                    <td><a href="{{url_for('removeitem', id=key)}}" class='btn btn-sm btn-danger'>Remove</a></td>
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>
+                  
+            <p>Grand Total: ${{grandtotal}}</p>
+       
+            <p><form action = "/cart" method="POST" >  
+                <button type="submit" class="btn btn-sm btn-warning"> Checkout</button>
+              </form></p>
+            <p><form action = "/" method="POST" >  
+                <button type="submit" class="btn btn-sm btn-warning"> Continue Shopping</button>
+              </form></p>
+    </div>
+</div>
 
-</html>
+
 
 {% endblock %}

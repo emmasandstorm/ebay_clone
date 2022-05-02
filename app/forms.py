@@ -38,6 +38,14 @@ class ListingForm(FlaskForm):
     image = FileField("Image", validators=[FileRequired()])
     submit = SubmitField("Create Listing")
 
+#trying it just as an HTML form
+'''class AddtoCart(FlaskForm):
+    # for now, quantity is too much
+    quantity = IntegerField(
+        "quantity",
+        validators=[NumberRange(min=1, max=None, message=None)]
+    )
+    submit = SubmitField("Add to Cart")'''
 
 class CreditCardForm(FlaskForm):
     number = StringField("Credit Card Number", validators=[DataRequired(), Length(

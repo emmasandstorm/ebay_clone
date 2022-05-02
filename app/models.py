@@ -8,6 +8,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -47,3 +48,4 @@ class Listing(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+

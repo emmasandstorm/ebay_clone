@@ -16,6 +16,12 @@
   <p>{{description}}</p>
   {% if for_purchase %}
   <p>{{price}}</p>
+            <p><form action = "/addcart" method="POST" >  
+                <input type="hidden" name= "listing_id" value= "{{listing.id}}">
+                <label for="quantity">Quantity: </label>
+                <input type="number" name = "quantity" id ="" value="1", min="1" max="None">
+                <button type="submit" class="btn btn-sm btn-warning"> Add to Cart</button>
+              </form></p>
   {% endif %} {% if filename %}
   <div class="column">
     <img src="{{ url_for('display_image', filename=filename) }}" />

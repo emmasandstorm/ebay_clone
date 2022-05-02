@@ -1,3 +1,5 @@
+from requests import session
+from sqlalchemy import true
 from app import db
 from app import myobj
 from app.forms import CreditCardForm, ListingForm, LoginForm
@@ -5,7 +7,7 @@ from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
 from flask_login import login_user, logout_user, login_required
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, session, url_for
 import os
 from werkzeug.utils import secure_filename
 
@@ -30,7 +32,6 @@ def login():
                 flash("Incorrect Password")
         else:
             flash("Failed login")
-
     return render_template("login.html", form=form)
 
 
@@ -102,18 +103,85 @@ def display_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
     if listing is not None:
         price = listing.purchase_price
+
         if price is None:
             price = 0
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
-            listing=listing.title,
+            listing=listing,
             description=listing.description,
             for_purchase=listing.for_purchase,
             price="${:,.2f}".format(price),
             filename=listing.image,
         )
+
     return redirect("/")
+
+
+def MergeDicts(dict1, dict2):
+    if isinstance(dict1, list) and isinstance(dict2, list):
+        return dict1 + dict2
+    elif isinstance(dict1, dict) and isinstance(dict2, dict):
+        return dict(list(dict1.items()) + list(dict2.items()))
+    return False
+
+
+@myobj.route("/addcart", methods=["POST"])
+def AddCart():
+    listing_id = request.form.get("listing_id")
+    quantity = int(request.form.get("quantity"))
+    product = Listing.query.filter_by(id=listing_id).first()
+    if listing_id and quantity and request.method == "POST":
+        CartItems = {
+            listing_id: {
+                "name": product.title,
+                "price": product.purchase_price,
+                "description": product.description,
+                "quantity": quantity,
+            }
+        }
+        if "Shoppingcart" in session:
+            print(session["Shoppingcart"])
+            if listing_id in session["Shoppingcart"]:
+                flash("This product is already in your cart")
+                return redirect(request.referrer)
+            else:
+                session["Shoppingcart"] = MergeDicts(session["Shoppingcart"], CartItems)
+                return redirect("/cart")
+        else:
+            session["Shoppingcart"] = CartItems
+            return redirect("/cart")
+
+    return redirect("/")
+
+
+@myobj.route("/cart", methods=["GET", "POST"])
+def display_cart():
+    if "Shoppingcart" not in session:
+        return redirect("/")
+    grandtotal = 0
+    for key, item in session["Shoppingcart"].items():
+        grandtotal += float(item["price"]) * float(item["quantity"])
+    return render_template(
+        "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
+    )
+
+
+@myobj.route("/removecartitem/<int:id>")
+def removeitem(id):
+    if "Shoppingcart" not in session and len(session["Shoppingcart"]) <= 0:
+        return redirect("/")
+    try:
+        session.modified = True
+        for key, item in session["Shoppingcart"].items():
+            if int(key) == id:
+                session["Shoppingcart"].pop(key, None)
+                return redirect("/cart")
+        pass
+    except Exception as e:
+        print(e)
+        return redirect("/cart")
 
 
 @myobj.route("/checkout", methods=["GET", "POST"])
@@ -146,7 +214,3 @@ def checkout():
 def display_image(filename):
     return redirect(url_for("static", filename="images/" + filename))
 
-
-@myobj.route("/cart")
-def display_cart():
-    return render_template("cart.html")
