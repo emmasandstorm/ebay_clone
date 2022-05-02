@@ -1,0 +1,8 @@
+site_name: Freebay Documentation
+nav:
+  - Home: index.md
+  - Buying: buying.md
+  - Selling: selling.md
+  - Auctions: auctions.md
+  - Account: manage_account.md
+theme: readthedocs

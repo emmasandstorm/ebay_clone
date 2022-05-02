@@ -1,12 +1,22 @@
+from wsgiref.validate import validator
 from app.validators import RequiredIf
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, IntegerField, DateField, StringField, SubmitField
-from wtforms.validators import DataRequired, NumberRange, Optional
+from flask_wtf.file import FileField, FileRequired
+from wtforms import (
+    BooleanField,
+    IntegerField,
+    DateField,
+    PasswordField,
+    SelectField,
+    StringField,
+    SubmitField,
+)
+from wtforms.validators import DataRequired, Length, NumberRange, Optional
 
 
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
-    password = StringField("Password", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 
@@ -25,6 +35,7 @@ class ListingForm(FlaskForm):
     )
     for_auction = BooleanField("Accept Bids")
     auction_end = DateField("Until", validators=[RequiredIf(for_auction=True)])
+    image = FileField("Image", validators=[FileRequired()])
     submit = SubmitField("Create Listing")
 
 #trying it just as an HTML form
@@ -35,3 +46,15 @@ class ListingForm(FlaskForm):
         validators=[NumberRange(min=1, max=None, message=None)]
     )
     submit = SubmitField("Add to Cart")'''
+
+class CreditCardForm(FlaskForm):
+    number = StringField("Credit Card Number", validators=[DataRequired(), Length(
+        min=16, max=16, message="Please enter a 16 digit credit card number."), ],)
+    name = StringField("Name on Card", validators=[DataRequired()])
+    expire_month = SelectField("MM", choices=["01", "02", "03", "04", "05", "06",
+                               "07", "08", "09", "10", "11", "12"], coerce=int, validators=[DataRequired()])
+    expire_year = SelectField("YY", choices=[
+                              "22", "23", "24", "25", "26", "27"], coerce=int, validators=[DataRequired()],)
+    cvv = StringField("CVV", validators=[DataRequired(), Length(
+        min=3, max=3, message="Please enter the 3 digit code on the back of the card.")],)
+    submit = SubmitField("Confirm Purchase")
