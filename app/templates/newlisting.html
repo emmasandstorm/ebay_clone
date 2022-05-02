@@ -16,7 +16,7 @@
 {% endif %} {% endwith %}
 
 <h1>{{title}}</h1>
-
+<div>
 <form action="" method="post" novalidate enctype="multipart/form-data">
   {{ form.hidden_tag() }}
   <p>
@@ -47,17 +47,18 @@
     {{ form.auction_end.label }}<br />
     {{ form.auction_end}}
   </p>
+  <p>
+  {{ form.image.label }}<br />
   {% if filename %}
   <div>
     <img src="{{ url_for('display_image', filename=filename) }}" />
   </div>
   {% endif %}
-  <p>
-    {{ form.image.label }}<br />
     {{ form.image}}
   </p>
   <p>{{ form.submit() }}</p>
 </form>
+</div>
 
 <script>
   function promptInput(bool_id, hide_id, disabled_id) {
@@ -69,6 +70,7 @@
       document.getElementById(hide_id).hidden = true;
       document.getElementById(disabled_id).disabled = true;
     }
+  }
     promptInput('for_purchase','price_prompt','purchase_price')
     promptInput('for_auction','date_prompt','auction_end')
 </script>

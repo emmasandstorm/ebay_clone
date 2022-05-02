@@ -1,9 +1,10 @@
-from app import db
+from app import db, login
 from datetime import datetime
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User(db.Model):
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
@@ -29,7 +30,9 @@ class Listing(db.Model):
     )  # Dollars only, working with cents presents too many questions
     for_auction = db.Column(db.Boolean, default=False)
     auction_end = db.Column(db.DateTime)
-    image = db.Column(db.String(256)) #store the file name since all images are in the same directory
+    image = db.Column(
+        db.String(256)
+    )  # store the file name since all images are in the same directory
 
     # bids
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -39,3 +42,8 @@ class Listing(db.Model):
         if self.image == "":
             image = False
         return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {image}, {self.user_id}>"
+
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
