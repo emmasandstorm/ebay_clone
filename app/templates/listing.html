@@ -18,8 +18,6 @@
   <p>{{price}}</p>
   {% endif %} {% if filename %}
   <div class="column">
-    <p>{{filename}}</p>
-    <p>{{ url_for('display_image', filename=filename) }}</p>
     <img src="{{ url_for('display_image', filename=filename) }}" />
   </div>
   {% endif %}
