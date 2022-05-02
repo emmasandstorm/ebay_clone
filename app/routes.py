@@ -42,6 +42,7 @@ def logout():
 
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
+@login_required
 def new_listing():
     form = ListingForm()
 
