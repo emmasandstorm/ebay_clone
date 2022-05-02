@@ -51,22 +51,22 @@ def new_listing():
         if form.for_auction.data is True:
             if not form.auction_end.data:
                 flash("End date is empty, validator not working")
-                return redirect(request.url)
+                return redirect(request.referrer)
 
             if form.auction_end.data <= datetime.utcnow().date():
                 flash("Auction must end in the future.")
-                return redirect(request.url)
+                return redirect(request.referrer)
 
         # Handle image upload
         if not form.image.data:
             flash("Please select an image")
-            return redirect(request.url)
+            return redirect(request.referrer)
 
         file = form.image.data
 
         if file.filename == "":
             flash("Please select an image")
-            return redirect(request.url)
+            return redirect(request.referrer)
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
