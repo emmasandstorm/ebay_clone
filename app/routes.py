@@ -131,7 +131,7 @@ def display_cart():
         return redirect("/")
     grandtotal = 0
     for key, item in session["Shoppingcart"].items():
-        grandtotal += float(item["price"])
+        grandtotal += float(item["price"]) * float(item["quantity"])
     return render_template(
         "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
     )
