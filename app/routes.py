@@ -130,6 +130,7 @@ def MergeDicts(dict1, dict2):
 
 
 @myobj.route("/addcart", methods=["POST"])
+@login_required
 def AddCart():
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
@@ -160,9 +161,10 @@ def AddCart():
 
 
 @myobj.route("/cart", methods=["GET", "POST"])
+@login_required
 def display_cart():
     if "Shoppingcart" not in session:
-        return redirect("/")
+        session["Shoppingcart"] = {}
     grandtotal = 0
     for key, item in session["Shoppingcart"].items():
         grandtotal += float(item["price"]) * float(item["quantity"])
@@ -188,6 +190,7 @@ def removeitem(id):
 
 
 @myobj.route("/checkout", methods=["GET", "POST"])
+@login_required
 def checkout():
     form = CreditCardForm()
     valid_card = False
