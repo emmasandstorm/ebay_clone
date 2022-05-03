@@ -2,7 +2,7 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import CreditCardForm, ListingForm, LoginForm
+from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm
 from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
@@ -35,6 +35,25 @@ def login():
         else:
             flash("Failed login")
     return render_template("login.html", form=form)
+
+@myobj.route("/signup", methods=["GET", "POST"])
+def sign_up():
+    form = SignUpForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        user = User.query.filter_by(username=username).first()
+
+        if not user:
+            u = User(username=username)
+            u.set_password(form.password.data)
+            db.session.add(u)
+            db.session.commit()
+            return redirect("/login")
+        else:
+            flash("You Already Have an Account!")
+
+    return render_template("signup.html", form=form)
 
 
 @myobj.route("/logout")
