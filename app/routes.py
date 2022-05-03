@@ -34,6 +34,24 @@ def login():
             flash("Failed login")
     return render_template("login.html", form=form)
 
+@myobj.route("/signup", methods=["GET", "POST"])
+def sign_up():
+    form = SignUpForm()
+    if form.validate_on_submit():
+        username = form.username.data
+        user = User.query.filter_by(username = username).first()
+
+        if not user:
+            u = User(username = username)
+            u.set_password(form.password.data)
+            db.session.add(u)
+            db.session.commit()
+            return redirect("/login")
+        else:
+            flash("User already exists")
+
+    return render_template("signup.html", title = "Register", form = form)
+
 
 @myobj.route("/logout")
 @login_required
