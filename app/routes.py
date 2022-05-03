@@ -51,7 +51,7 @@ def sign_up():
             db.session.commit()
             return redirect("/login")
         else:
-            flash("You Already Have an Account!")
+            flash("Username taken, please select another one.")
 
     return render_template("signup.html", form=form)
 
