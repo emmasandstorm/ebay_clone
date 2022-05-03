@@ -1,21 +1,7 @@
 {% extends "base.html" %}
 {% block title %} {{title}} {% endblock%}
+{% block head %}<h1>{{title}}</h1>{% endblock%}
 {% block content %}
-
-{% for field, errors in form.errors.items() %}
-  {{ ', '.join(errors) }}
-{% endfor %}
-
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
-  {% for message in messages %}
-  <li>{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %} {% endwith %}
-
-<h1>{{title}}</h1>
 <div>
 <form action="" method="post" novalidate enctype="multipart/form-data">
   {{ form.hidden_tag() }}

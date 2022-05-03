@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Cart {% endblock%}
+{% block head %}<h1>Cart</h1>{% endblock %}
 {% block content %} 
 <div class="container">
     <div class="row">
@@ -32,15 +33,12 @@
                   
             <p>Grand Total: ${{grandtotal}}</p>
        
-            <p><form action = "/cart" method="POST" >  
+            <p><form action = "/checkout" method="GET" >  
                 <button type="submit" class="btn btn-sm btn-warning"> Checkout</button>
               </form></p>
-            <p><form action = "/" method="POST" >  
+            <p><form action = "/" method="GET" >  
                 <button type="submit" class="btn btn-sm btn-warning"> Continue Shopping</button>
               </form></p>
     </div>
 </div>
-
-
-
 {% endblock %}

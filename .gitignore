@@ -3,3 +3,6 @@ app/__pycache__/*
 
 #Do not store database in version control
 app/*.db
+
+#Do not store mkdocs deployment files in version control
+site/*
