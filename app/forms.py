@@ -44,7 +44,14 @@ class ListingForm(FlaskForm):
     image = FileField("Image", validators=[FileRequired()])
     submit = SubmitField("Create Listing")
 
-#trying it just as an HTML form
+
+class AuctionForm(FlaskForm):
+    price = IntegerField("Price", validators=[DataRequired(), NumberRange(
+        min=0, max=1000000, message="Price must be between 0 and 1000000.")])
+    submit = SubmitField("Place Your Bid")
+
+
+# trying it just as an HTML form
 '''class AddtoCart(FlaskForm):
     # for now, quantity is too much
     quantity = IntegerField(
@@ -52,6 +59,7 @@ class ListingForm(FlaskForm):
         validators=[NumberRange(min=1, max=None, message=None)]
     )
     submit = SubmitField("Add to Cart")'''
+
 
 class CreditCardForm(FlaskForm):
     number = StringField("Credit Card Number", validators=[DataRequired(), Length(

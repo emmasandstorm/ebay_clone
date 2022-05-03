@@ -16,7 +16,18 @@
                 <input type="number" name = "quantity" id ="" value="1", min="1" max="None">
                 <button type="submit" class="btn btn-sm btn-warning"> Add to Cart</button>
               </form></p>
-  {% endif %} {% if filename %}
+  {% endif %}
+  {% if accepts_bids %}
+    {% if highest_bid %}
+      <p>Highest bid is: {{highest_bid}}</p>
+    {% endif %}
+    {% if form %}
+    <form action="" method="post" novalidate enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <p>{{form.price}} {{form.submit()}}</p>
+    {% endif %}
+  {% endif %}
+  {% if filename %}
   <div class="column">
     <img src="{{ url_for('display_image', filename=filename) }}" />
   </div>

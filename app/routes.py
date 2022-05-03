@@ -2,8 +2,8 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm
-from app.models import Listing, User
+from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignupForm
+from app.models import Bid, Listing, User
 from app.utils import allowed_file
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
@@ -119,14 +119,51 @@ def new_listing():
     return render_template("newlisting.html", title="New Listing", form=form)
 
 
-@myobj.route("/listing/<listing_id>")
+@myobj.route("/listing/<listing_id>", methods=["GET", "POST"])
 def display_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
     if listing is not None:
-        price = listing.purchase_price
 
+        # Handle instant purchase
+        price = listing.purchase_price
         if price is None:
             price = 0
+
+        # Handle bidding for auctionable items
+        if listing.for_auction is True and datetime.utcnow() < listing.auction_end:
+            form = AuctionForm()
+            highest_bid = listing.bids.order_by(Bid.value.desc()).first()
+
+            if highest_bid is None:
+                highest_bid = Bid(value=0.00)
+
+            if form.validate_on_submit():
+                if form.price.data <= highest_bid.value:
+                    flash(
+                        "${form.price.data}.00 is not larger than the highest bid.")
+                else:
+                    b = Bid(
+                        value=form.price.data,
+                        bidder=current_user,
+                        listing_id=listing_id,
+                    )
+                    db.session.add(b)
+                    db.session.commit()
+                    highest_bid = listing.bids.order_by(
+                        Bid.value.desc()).first()
+
+            return render_template(
+                "listing.html",
+                title=f"Listing {listing_id}",
+                listing=listing,
+                description=listing.description,
+                for_purchase=listing.for_purchase,
+                price="${:,.2f}".format(price),
+                filename=listing.image,
+                accepts_bids=listing.for_auction,
+                highest_bid="${:,.2f}".format(highest_bid.value),
+                form=form,
+            )
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
@@ -136,7 +173,6 @@ def display_listing(listing_id):
             price="${:,.2f}".format(price),
             filename=listing.image,
         )
-
     return redirect("/")
 
 

@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
+    bids = db.relationship("Bid", backref="bidder", lazy="dynamic")
     # listings relationship for sellers for final milestone
     #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
 
@@ -39,7 +40,7 @@ class Listing(db.Model):
     sold = db.Column(db.Boolean, default=False)
 
     buyer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    # bids
+    bids = db.relationship("Bid", backref="listing", lazy="dynamic")
     # user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
@@ -47,6 +48,17 @@ class Listing(db.Model):
         if self.image == "":
             image = False
         return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {image}, {self.buyer_id}>"
+
+
+class Bid(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow())
+    value = db.Column(db.Numeric)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    listing_id = db.Column(db.Integer, db.ForeignKey("listing.id"))
+
+    def __repr__(self):
+        return f"<Bid: {self.id}, {self.timestamp}, {self.value}, {self.user_id}, {self.listing_id}>"
 
 
 @login.user_loader
