@@ -143,7 +143,7 @@ def display_listing(listing_id):
                 if form.validate_on_submit():
                     if form.price.data <= highest_bid.value:
                         flash(
-                            "${form.price.data}.00 is not larger than the highest bid.")
+                            f"${form.price.data}.00 is not larger than the highest bid.")
                     else:
                         b = Bid(
                             value=form.price.data,
@@ -290,7 +290,7 @@ def checkout():
         expire_year = 2000 + form.expire_year.data
         today = datetime.today()
         if expire_year > today.year or (
-            expire_year == today.year and form.expire_month.data > today.month
+            expire_year == today.year and form.expire_month.data >= today.month
         ):
             valid_card = True
             try:

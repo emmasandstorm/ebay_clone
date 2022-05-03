@@ -46,7 +46,7 @@ class ListingForm(FlaskForm):
 
 
 class AuctionForm(FlaskForm):
-    price = IntegerField("Price", validators=[DataRequired(), NumberRange(
+    price = IntegerField("Price", validators=[DataRequired(message="Bids must be in whole dollars."), NumberRange(
         min=0, max=1000000, message="Price must be between 0 and 1000000.")])
     submit = SubmitField("Place Your Bid")
 
