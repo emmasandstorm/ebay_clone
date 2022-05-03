@@ -1,22 +1,7 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Cart {% endblock%}
+{% block head %}<h1>{{title}}</h1>{% endblock %}
 {% block content %} 
-<p>
-	{% with messages = get_flashed_messages() %}
-	  {% if messages %}
-		<ul>
-		{% for message in messages %}
-		  <li>{{ message }}</li>
-		{% endfor %}
-		</ul>
-	  {% endif %}
-	{% endwith %}
-</p>
-
-<h1>{{title}}</h1>
-{% for field, errors in form.errors.items() %}
-  {{ ', '.join(errors) }}
-{% endfor %}
 
 <form action="" method="post" novalidate enctype="multipart/form-data">
     {{ form.hidden_tag() }}
