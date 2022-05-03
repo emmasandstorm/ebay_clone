@@ -25,7 +25,7 @@ If everything is matching, the system will log you in and grant you access to mu
 
 ## Logout
 
-You must be loggin in to logout.
+You must be logged in to logout.
 
 To logout, you must press the logout button on the navbar. It will redirect you to a logout page. If you are not logged in, you will be redirected to the login page so you can logout. If you are logged in, the system will log you out of the session and take you back to the login page. 
 
