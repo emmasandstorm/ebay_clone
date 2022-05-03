@@ -162,7 +162,7 @@ def AddCart():
 @myobj.route("/cart", methods=["GET", "POST"])
 def display_cart():
     if "Shoppingcart" not in session:
-        return redirect("/")
+        session["Shoppingcart"] = {}
     grandtotal = 0
     for key, item in session["Shoppingcart"].items():
         grandtotal += float(item["price"]) * float(item["quantity"])
