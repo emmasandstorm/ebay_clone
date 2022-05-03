@@ -20,6 +20,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Submit")
 
 
+class SignUpForm(FlaskForm):
+    username = StringField("Username", validators = [DataRequired()])
+    password = PasswordField("Password", validators = [DataRequired()])
+    submit = SubmitField("Register")
+
+
 class ListingForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])
