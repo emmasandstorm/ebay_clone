@@ -17,7 +17,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"<User = {self.username}, {self.email}>"
+        return f"<User = {self.username}>"
 
 
 class Listing(db.Model):
@@ -48,4 +48,3 @@ class Listing(db.Model):
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
