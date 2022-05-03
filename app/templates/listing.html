@@ -8,12 +8,13 @@
 {% block content %}
   <p>{{listing.title}}</p>
   <p>{{description}}</p>
-  {% if for_purchase and not listing.sold %}
-  <p>{{price}}</p>
+  {% if for_purchase and not listing.sold and not winner %}
+  <p>{{"${:,.2f}".format(price)}}</p>
             <p><form action = "/addcart" method="POST" >  
                 <input type="hidden" name= "listing_id" value= "{{listing.id}}">
                 <label for="quantity">Quantity: </label>
                 <input type="number" name = "quantity" id ="" value="1", min="1" max="None">
+                <input type="hidden" name = "price" value="{{price}}">
                 <button type="submit" class="btn btn-sm btn-warning"> Add to Cart</button>
               </form></p>
   {% endif %}
@@ -24,11 +25,18 @@
     {% if form %}
     <form action="" method="post" novalidate enctype="multipart/form-data">
       {{ form.hidden_tag() }}
-      <p>{{form.price}} {{form.submit()}}</p>
+      <p>${{form.price}}.00 {{form.submit()}}</p> 
+    {% endif %}
+    {% if winner and checkout and not listing.sold %}
+      <form action = "/addcart" method="POST" >  
+        <input type="hidden" name= "listing_id" value= "{{listing.id}}">
+        <input type="hidden" name = "quantity" value="1">
+        <input type="hidden" name = "price" value="{{price}}">
+        <button type="submit" class="btn btn-sm btn-warning"> Add to Cart</button>
     {% endif %}
   {% endif %}
   {% if filename %}
-  <div class="column">
+  <div>
     <img src="{{ url_for('display_image', filename=filename) }}" />
   </div>
   {% endif %}

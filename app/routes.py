@@ -130,47 +130,82 @@ def display_listing(listing_id):
             price = 0
 
         # Handle bidding for auctionable items
-        if listing.for_auction is True and datetime.utcnow() < listing.auction_end:
-            form = AuctionForm()
+        if listing.for_auction is True:
+
             highest_bid = listing.bids.order_by(Bid.value.desc()).first()
-
             if highest_bid is None:
-                highest_bid = Bid(value=0.00)
+                highest_bid = Bid(value=0)
 
-            if form.validate_on_submit():
-                if form.price.data <= highest_bid.value:
-                    flash(
-                        "${form.price.data}.00 is not larger than the highest bid.")
-                else:
-                    b = Bid(
-                        value=form.price.data,
-                        bidder=current_user,
-                        listing_id=listing_id,
-                    )
-                    db.session.add(b)
-                    db.session.commit()
-                    highest_bid = listing.bids.order_by(
-                        Bid.value.desc()).first()
+            # Auction is ongoing, accept bids
+            if datetime.utcnow() < listing.auction_end:
+                form = AuctionForm()
 
-            return render_template(
-                "listing.html",
-                title=f"Listing {listing_id}",
-                listing=listing,
-                description=listing.description,
-                for_purchase=listing.for_purchase,
-                price="${:,.2f}".format(price),
-                filename=listing.image,
-                accepts_bids=listing.for_auction,
-                highest_bid="${:,.2f}".format(highest_bid.value),
-                form=form,
-            )
+                if form.validate_on_submit():
+                    if form.price.data <= highest_bid.value:
+                        flash(
+                            "${form.price.data}.00 is not larger than the highest bid.")
+                    else:
+                        b = Bid(
+                            value=form.price.data,
+                            bidder=current_user,
+                            listing_id=listing_id,
+                        )
+                        db.session.add(b)
+                        db.session.commit()
+                        highest_bid = b
+
+                return render_template(
+                    "listing.html",
+                    title=f"Listing {listing_id}",
+                    listing=listing,
+                    description=listing.description,
+                    for_purchase=listing.for_purchase,
+                    price=price,
+                    filename=listing.image,
+                    accepts_bids=listing.for_auction,
+                    highest_bid="${:,.2f}".format(highest_bid.value),
+                    form=form,
+                )
+
+            # Auction has ended, do not accept bids
+            else:
+                # Someone won the auction, only they should see checkout
+                if highest_bid.bidder is not None:
+                    if current_user == highest_bid.bidder:
+                        return render_template(
+                            "listing.html",
+                            title=f"Listing {listing_id}",
+                            listing=listing,
+                            description=listing.description,
+                            for_purchase=listing.for_purchase,
+                            price=highest_bid.value,
+                            filename=listing.image,
+                            accepts_bids=listing.for_auction,
+                            winner=True,
+                            checkout=True
+                        )
+                    # Someone won, but not the current user
+                    else:
+                        return render_template(
+                            "listing.html",
+                            title=f"Listing {listing_id}",
+                            listing=listing,
+                            description=listing.description,
+                            for_purchase=listing.for_purchase,
+                            price=highest_bid.value,
+                            filename=listing.image,
+                            accepts_bids=listing.for_auction,
+                            winner=True,
+                            checkout=False
+                        )
+        # Either no auction or auction ended with no bids
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
             listing=listing,
             description=listing.description,
             for_purchase=listing.for_purchase,
-            price="${:,.2f}".format(price),
+            price=price,
             filename=listing.image,
         )
     return redirect("/")
@@ -189,12 +224,13 @@ def MergeDicts(dict1, dict2):
 def AddCart():
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
+    price = int(float(request.form.get("price")))
     product = Listing.query.filter_by(id=listing_id).first()
     if listing_id and quantity and request.method == "POST":
         CartItems = {
             listing_id: {
                 "name": product.title,
-                "price": product.purchase_price,
+                "price": price,
                 "description": product.description,
                 "quantity": quantity,
             }
