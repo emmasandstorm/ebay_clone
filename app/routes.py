@@ -56,7 +56,7 @@ def new_listing():
                 flash("End date is empty, validator not working")
                 return redirect(request.referrer)
 
-            if form.auction_end.data <= datetime.utcnow().date():
+            if form.auction_end.data <= datetime.today().date():
                 flash("Auction must end in the future.")
                 return redirect(request.referrer)
 
