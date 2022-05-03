@@ -12,4 +12,11 @@
 	    {{ form.password(size=32) }}
         <p>{{ form.submit() }}</p>
     </form>
+    <button onclick="myFunction()">Forgot Password?</button>
+    <p id="lol"></p>
+    <script>
+      function myFunction() {
+        document.getElementById("lol").innerHTML = "Too bad. Try again";
+      }
+    </script>
 {% endblock %}
