@@ -2,7 +2,7 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignupForm
+from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
 from app.models import Bid, Listing, User
 from app.utils import allowed_file
 from datetime import datetime
@@ -330,6 +330,9 @@ def checkout():
     )
 
 
+"""
 @myobj.route("/display/<filename>")
 def display_image(filename):
-    return redirect(url_for("static", filename="images/" + filename))
+    for i in range(10):
+        print(i)
+    return redirect(url_for("static", filename="images/" + filename), code=302)"""
