@@ -2,7 +2,7 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import CreditCardForm, ListingForm, LoginForm, ForgotPassword
+from app.forms import CreditCardForm, ListingForm, LoginForm
 from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
