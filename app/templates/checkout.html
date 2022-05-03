@@ -1,4 +1,6 @@
-<!doctype html>
+{% extends "base.html" %}
+{% block title %} FreEbay Cart {% endblock%}
+{% block content %} 
 <p>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}
@@ -35,3 +37,5 @@
     </p>
     <p>{{ form.submit() }}</p>
   </form>
+
+  {% endblock %}

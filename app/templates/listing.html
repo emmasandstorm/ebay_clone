@@ -10,11 +10,16 @@
 </ul>
 {% endif %} {% endwith %}
 <title>{{title}}</title>
-<h1>{{title}}</h1>
+
+<h1>{{title}}
+  {% if listing.sold %}
+  - SOLD to {{listing.buyer.username}}
+  {% endif %}
+</h1>
 <body>
-  <p>{{listing}}</p>
+  <p>{{listing.title}}</p>
   <p>{{description}}</p>
-  {% if for_purchase %}
+  {% if for_purchase and not listing.sold %}
   <p>{{price}}</p>
             <p><form action = "/addcart" method="POST" >  
                 <input type="hidden" name= "listing_id" value= "{{listing.id}}">

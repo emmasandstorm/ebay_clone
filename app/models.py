@@ -8,6 +8,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
+    # listings relationship for sellers for final milestone
     #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
 
     def set_password(self, password):
@@ -17,7 +19,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return f"<User = {self.username}, {self.email}>"
+        return f"<User = {self.username}>"
 
 
 class Listing(db.Model):
@@ -34,18 +36,19 @@ class Listing(db.Model):
     image = db.Column(
         db.String(256)
     )  # store the file name since all images are in the same directory
+    sold = db.Column(db.Boolean, default=False)
 
+    buyer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     # bids
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    # user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         image = True
         if self.image == "":
             image = False
-        return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {image}, {self.user_id}>"
+        return f"<Listing: {self.id}, {self.timestamp}, {self.title}, {self.description}, {image}, {self.buyer_id}>"
 
 
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-

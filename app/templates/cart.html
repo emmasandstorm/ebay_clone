@@ -1,6 +1,21 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Cart {% endblock%}
 {% block content %} 
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% if form %}
+{% for field, errors in form.errors.items() %}
+  {{ ', '.join(errors) }}
+{% endfor %}
+{% endif %}
+
 <div class="container">
     <div class="row">
         <table class="table table-sm">
@@ -32,10 +47,10 @@
                   
             <p>Grand Total: ${{grandtotal}}</p>
        
-            <p><form action = "/cart" method="POST" >  
+            <p><form action = "/checkout" method="GET" >  
                 <button type="submit" class="btn btn-sm btn-warning"> Checkout</button>
               </form></p>
-            <p><form action = "/" method="POST" >  
+            <p><form action = "/" method="GET" >  
                 <button type="submit" class="btn btn-sm btn-warning"> Continue Shopping</button>
               </form></p>
     </div>
