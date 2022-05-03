@@ -6,7 +6,7 @@ from app.forms import CreditCardForm, ListingForm, LoginForm
 from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
-from flask_login import login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, request, flash, redirect, session, url_for
 import os
 from werkzeug.utils import secure_filename
@@ -213,9 +213,18 @@ def checkout():
             flash("Card is expired, submit another card")
         if valid_card is True:
             if "Shoppingcart" in session and session["Shoppingcart"]:
-                for listing_id in session["Shoppingcart"]:
-                    print(f"{listing_id} in cart")
-                    # make listing sold, remove from cart
+                try:
+                    session.modified = True
+                    for key, item in session["Shoppingcart"].items():
+                        listing = Listing.query.filter_by(id=int(key)).first()
+                        if listing is not None:
+                            listing.sold = True
+                            listing.buyer = current_user
+                            db.session.commit()
+                    session["Shoppingcart"].clear()
+                except Exception as e:
+                    print(e)
+                flash("Listings bought!")
                 return redirect("/cart")
             else:
                 flash("Cart is empty, consider adding something to the cart.")
