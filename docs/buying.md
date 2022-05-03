@@ -22,7 +22,7 @@ A user can view their cart by adding an item to their cart or pressing the cart 
 
 ## Checkout
 
-Description of instantly purchasing listings
+The checkout page can be accessed when the checkout button is submitted on the cart page. On the checkout page, the user must enter a 16 digit credit card number, name on credit card, expiration date, and a CVV number. The expiration date must be some date in the future. Once all test entries are filled, the user clicks the 'Confirm Purchase' button. This will mark all listings in the cart as purchased and connect them to the buyer. The page will then redirect back to the cart, which is now empty. 
 
 ## Purchased Listings
 

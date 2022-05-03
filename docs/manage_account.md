@@ -6,7 +6,7 @@ Also included in the user database is the relationship of being a buyer. Once a 
 
 ## Create Account
 
-Description of creating a new account
+To create an account, a user can select the sign up button on the Login page. This wil redirect the user to the sign up page. Once on the page, the user must input a username and password. The password digits will show up as dots for privacy. Once both text entries are filled, the user submits the register button. The system then adds the username and password into the database for users. 
 
 ## Delete Account
 
