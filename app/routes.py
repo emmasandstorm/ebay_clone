@@ -2,8 +2,8 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm
-from app.models import Listing, User
+from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
+from app.models import Bid, Listing, User
 from app.utils import allowed_file
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
@@ -119,24 +119,95 @@ def new_listing():
     return render_template("newlisting.html", title="New Listing", form=form)
 
 
-@myobj.route("/listing/<listing_id>")
+@myobj.route("/listing/<listing_id>", methods=["GET", "POST"])
 def display_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
     if listing is not None:
-        price = listing.purchase_price
 
+        # Handle instant purchase
+        price = listing.purchase_price
         if price is None:
             price = 0
+
+        # Handle bidding for auctionable items
+        if listing.for_auction is True:
+
+            highest_bid = listing.bids.order_by(Bid.value.desc()).first()
+            if highest_bid is None:
+                highest_bid = Bid(value=0)
+
+            # Auction is ongoing, accept bids
+            if datetime.utcnow() < listing.auction_end:
+                form = AuctionForm()
+
+                if form.validate_on_submit():
+                    if form.price.data <= highest_bid.value:
+                        flash(
+                            f"${form.price.data}.00 is not larger than the highest bid.")
+                    else:
+                        b = Bid(
+                            value=form.price.data,
+                            bidder=current_user,
+                            listing_id=listing_id,
+                        )
+                        db.session.add(b)
+                        db.session.commit()
+                        highest_bid = b
+
+                return render_template(
+                    "listing.html",
+                    title=f"Listing {listing_id}",
+                    listing=listing,
+                    description=listing.description,
+                    for_purchase=listing.for_purchase,
+                    price=price,
+                    filename=listing.image,
+                    accepts_bids=listing.for_auction,
+                    highest_bid="${:,.2f}".format(highest_bid.value),
+                    form=form,
+                )
+
+            # Auction has ended, do not accept bids
+            else:
+                # Someone won the auction, only they should see checkout
+                if highest_bid.bidder is not None:
+                    if current_user == highest_bid.bidder:
+                        return render_template(
+                            "listing.html",
+                            title=f"Listing {listing_id}",
+                            listing=listing,
+                            description=listing.description,
+                            for_purchase=listing.for_purchase,
+                            price=highest_bid.value,
+                            filename=listing.image,
+                            accepts_bids=listing.for_auction,
+                            winner=True,
+                            checkout=True
+                        )
+                    # Someone won, but not the current user
+                    else:
+                        return render_template(
+                            "listing.html",
+                            title=f"Listing {listing_id}",
+                            listing=listing,
+                            description=listing.description,
+                            for_purchase=listing.for_purchase,
+                            price=highest_bid.value,
+                            filename=listing.image,
+                            accepts_bids=listing.for_auction,
+                            winner=True,
+                            checkout=False
+                        )
+        # Either no auction or auction ended with no bids
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
             listing=listing,
             description=listing.description,
             for_purchase=listing.for_purchase,
-            price="${:,.2f}".format(price),
+            price=price,
             filename=listing.image,
         )
-
     return redirect("/")
 
 
@@ -153,12 +224,13 @@ def MergeDicts(dict1, dict2):
 def AddCart():
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
+    price = int(float(request.form.get("price")))
     product = Listing.query.filter_by(id=listing_id).first()
     if listing_id and quantity and request.method == "POST":
         CartItems = {
             listing_id: {
                 "name": product.title,
-                "price": product.purchase_price,
+                "price": price,
                 "description": product.description,
                 "quantity": quantity,
             }
@@ -218,7 +290,7 @@ def checkout():
         expire_year = 2000 + form.expire_year.data
         today = datetime.today()
         if expire_year > today.year or (
-            expire_year == today.year and form.expire_month.data > today.month
+            expire_year == today.year and form.expire_month.data >= today.month
         ):
             valid_card = True
             try:
@@ -258,6 +330,9 @@ def checkout():
     )
 
 
+"""
 @myobj.route("/display/<filename>")
 def display_image(filename):
-    return redirect(url_for("static", filename="images/" + filename))
+    for i in range(10):
+        print(i)
+    return redirect(url_for("static", filename="images/" + filename), code=302)"""
