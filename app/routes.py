@@ -2,13 +2,8 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-<<<<<<< HEAD
-from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
-from app.models import Listing, User
-=======
-from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
+from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Bid, Listing, User
->>>>>>> 55a33d30253586942d9ce71aefde6bbdcf141fe3
 from app.utils import allowed_file
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
@@ -79,9 +74,6 @@ def edit_profile():
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
     user = User.query.filter_by(username=username).first()
-    #URL should be profile/username
-    #Display (Username)'s Profile as heading
-    #Get info from bio db to display under heading
     
     return render_template(
         "profile.html", username=user.username, bio=user.user_profile)
