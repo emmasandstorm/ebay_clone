@@ -4,7 +4,7 @@ from app import db
 from app import myobj
 from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
 from app.models import Bid, Listing, User
-from app.utils import allowed_file
+from app.utils import allowed_file, MergeDicts
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, request, flash, redirect, session, url_for
@@ -31,10 +31,11 @@ def login():
 
                 return redirect("/")
             else:
-                flash("Incorrect Password") 
+                flash("Incorrect Password")
         else:
             flash("Failed login")
     return render_template("login.html", form=form)
+
 
 @myobj.route("/signup", methods=["GET", "POST"])
 def sign_up():
@@ -49,7 +50,8 @@ def sign_up():
             u.set_password(form.password.data)
             db.session.add(u)
             db.session.commit()
-            return redirect("/login")
+            login_user(u)
+            return redirect("/")
         else:
             flash("Username taken, please select another one.")
 
@@ -110,12 +112,7 @@ def new_listing():
             db.session.add(l)
             db.session.commit()
 
-            return render_template(
-                "newlisting.html",
-                title="New Listing",
-                form=form,
-                filename=l.image,
-            )
+            return redirect("/listing/" + str(l.id))
     return render_template("newlisting.html", title="New Listing", form=form)
 
 
@@ -209,14 +206,6 @@ def display_listing(listing_id):
             filename=listing.image,
         )
     return redirect("/")
-
-
-def MergeDicts(dict1, dict2):
-    if isinstance(dict1, list) and isinstance(dict2, list):
-        return dict1 + dict2
-    elif isinstance(dict1, dict) and isinstance(dict2, dict):
-        return dict(list(dict1.items()) + list(dict2.items()))
-    return False
 
 
 @myobj.route("/addcart", methods=["POST"])
