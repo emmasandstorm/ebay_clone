@@ -8,6 +8,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    user_profile = db.Column(db.String(150))
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
     # listings relationship for sellers for final milestone
     #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
@@ -17,6 +18,9 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def set_bio(self, bio):
+        self.user_profile = bio
 
     def __repr__(self):
         return f"<User = {self.username}>"
