@@ -24,7 +24,6 @@ A user can view their cart by adding an item to their cart or pressing the cart 
 
 On the checkout page, simply enter fake credit card information (please do not use a real card) and confirm your purchase. All items in your cart will be purchased, remove from cart, and updated to proudly display your ownership.
 
-
 ## Purchased Listings
 
 View all the listings you own
