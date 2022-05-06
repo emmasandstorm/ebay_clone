@@ -31,10 +31,11 @@ def login():
 
                 return redirect("/")
             else:
-                flash("Incorrect Password") 
+                flash("Incorrect Password")
         else:
             flash("Failed login")
     return render_template("login.html", form=form)
+
 
 @myobj.route("/signup", methods=["GET", "POST"])
 def sign_up():
@@ -79,7 +80,7 @@ def new_listing():
                 flash("Auction must end in the future.")
                 return redirect(request.referrer)
 
-        # Handle image upload
+        # Handle image validation and upload
         if not form.image.data:
             flash("Please select an image")
             return redirect(request.referrer)
@@ -98,6 +99,7 @@ def new_listing():
 
             file.save(os.path.join(myobj.config["UPLOAD_FOLDER"], filename))
 
+            # All data valid, image stored. Create and store new listing.
             l = Listing(
                 title=form.title.data,
                 description=form.description.data,
@@ -286,6 +288,7 @@ def checkout():
     form = CreditCardForm()
     valid_card = False
 
+    # Validate credit card information (but don't check if it's a real card)
     if form.validate_on_submit():
         expire_year = 2000 + form.expire_year.data
         today = datetime.today()
@@ -305,6 +308,8 @@ def checkout():
                 valid_card = False
         else:
             flash("Card is expired, submit another card")
+
+        # Card validation was successful, purchase the contents of the cart
         if valid_card is True:
             if "Shoppingcart" in session and session["Shoppingcart"]:
                 try:

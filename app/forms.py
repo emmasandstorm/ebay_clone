@@ -21,8 +21,8 @@ class LoginForm(FlaskForm):
 
 
 class SignUpForm(FlaskForm):
-    username = StringField("Username", validators = [DataRequired()])
-    password = PasswordField("Password", validators = [DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Register")
 
 
@@ -49,16 +49,6 @@ class AuctionForm(FlaskForm):
     price = IntegerField("Price", validators=[DataRequired(message="Bids must be in whole dollars."), NumberRange(
         min=0, max=1000000, message="Price must be between 0 and 1000000.")])
     submit = SubmitField("Place Your Bid")
-
-
-# trying it just as an HTML form
-'''class AddtoCart(FlaskForm):
-    # for now, quantity is too much
-    quantity = IntegerField(
-        "quantity",
-        validators=[NumberRange(min=1, max=None, message=None)]
-    )
-    submit = SubmitField("Add to Cart")'''
 
 
 class CreditCardForm(FlaskForm):
