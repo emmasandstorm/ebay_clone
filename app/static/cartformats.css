@@ -1,4 +1,46 @@
 
+body {
+    background-color: #fbf9e6;
+}
+    
+.title {
+    text-align: center;
+    color: #CC4C4C;
+  font-size: 100px;
+  font-family: Arial, serif;
+
+}
+
+.login {
+    border: 5px solid #ad0e0e;
+  border-style: ridge;
+    background-color: rgb(214, 200, 200);
+    text-align: center;
+    padding: 16px;
+  margin-left: 380px;
+  margin-right: 380px;
+
+  
+  }
+
+button {
+    background-color: #ecb131;
+    color: black;
+    padding: 16px 20px;
+    margin: px 0;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+  }
+
+.pswd {
+  text-align: center;
+}
+
+button:hover {
+    opacity: 0.8;
+  }
+
 .content-section {
     margin: 1em;
 }

@@ -1,7 +1,15 @@
 {% extends "base.html"%}
 {% block title %} Login {% endblock %}
-{% block head %}<h1>Login</h1>{% endblock %}
 {% block content %} 
+<html>
+<head>
+  <link rel = "stylesheet" href = '/static/cartformats.css'>
+  <div class = "title">
+    <h1>Login here!</h1>
+  </div>
+</head>
+
+<div class = "login">
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <p>
@@ -19,4 +27,6 @@
         document.getElementById("lol").innerHTML = "Too bad. Try again";
       }
     </script>
+    </div>
+    </html>
 {% endblock %}
