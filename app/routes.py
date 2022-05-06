@@ -2,7 +2,7 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm
+from app.forms import CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Listing, User
 from app.utils import allowed_file
 from datetime import datetime
@@ -55,6 +55,37 @@ def sign_up():
 
     return render_template("signup.html", form=form)
 
+
+@myobj.route("/profile/edit", methods=["GET", "POST"])
+@login_required
+def edit_profile():
+    form = UserBioForm()
+
+    if form.validate_on_submit():
+        user_bio = form.bio.data
+        bio = User.query.filter_by(user_profile=bio).first()
+
+        b = User(user_profile=user_bio)
+        b.set_bio(form.user_bio.data)
+        db.session.add(b)
+        db.session.commit()
+        return redirect("/profile/userNAME")
+        
+    return render_template("editprofile.html", form=form)
+
+@myobj.route("/profile/<name>")
+def profile(name):
+    name = User.query.filter_by(username=name).first()
+    if name is not None:
+
+        bio = name.user_profile
+        if bio is None:
+            bio = "bio goes here"
+    
+    return render_template(
+        "profile.html", 
+        title=f"User {name}", 
+        name=name)
 
 @myobj.route("/logout")
 @login_required
