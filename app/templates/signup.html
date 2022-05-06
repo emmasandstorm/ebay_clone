@@ -1,7 +1,14 @@
 {% extends "base.html"%}
 {% block title %} Sign Up {% endblock %}
-{% block head %}<h1>Join FreEbay!</h1>{% endblock %}
 {% block content %} 
+<html>
+    <head>
+        <link rel = "stylesheet" href = '/static/cartformats.css'>
+        <div class = "title">
+          <h1>Join FreEbay</h1>
+        </div>
+      </head>
+<div class = "login">
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <p>
@@ -12,4 +19,6 @@
 	    {{ form.password(size=32) }}
         <p>{{ form.submit() }}</p>
     </form>
+</div>
+    </html>
 {% endblock %}
