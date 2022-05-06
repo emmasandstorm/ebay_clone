@@ -301,9 +301,13 @@ def checkout():
                     for key, item in session["Shoppingcart"].items():
                         listing = Listing.query.filter_by(id=int(key)).first()
                         if listing is not None:
-                            listing.sold = True
-                            listing.buyer = current_user
-                            db.session.commit()
+                            if listing.sold == False:
+                                listing.sold = True
+                                listing.buyer = current_user
+                                db.session.commit()
+                            else:
+                                flash(
+                                    f"{listing.title} was purchased by another user while in your cart. Sorry! Gotta be quick on FreEbay!")
                     session["Shoppingcart"].clear()
                 except Exception as e:
                     print(e)
@@ -317,11 +321,3 @@ def checkout():
         title="Checkout",
         form=form,
     )
-
-
-"""
-@myobj.route("/display/<filename>")
-def display_image(filename):
-    for i in range(10):
-        print(i)
-    return redirect(url_for("static", filename="images/" + filename), code=302)"""
