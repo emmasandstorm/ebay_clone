@@ -1,13 +1,6 @@
 {% extends "base.html"%}
 {% block title %} My Account {% endblock %}
-{% block head %}<h1>"Username"</h1>{% endblock %}
+{% block head %}<h1>{{username}}'s Profile</h1>{% endblock %}
 {% block content %} 
-    <form action="" method="POST">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.user_bio.label }}<br>
-            {{ form.user_bio(size=100) }}
-	<p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <p>{{bio}}</p>
 {% endblock %}
