@@ -10,8 +10,6 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
     bids = db.relationship("Bid", backref="bidder", lazy="dynamic")
-    # listings relationship for sellers for final milestone
-    #cart = db.relationship('Cart', backref='User', lazy ='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -41,7 +39,6 @@ class Listing(db.Model):
 
     buyer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     bids = db.relationship("Bid", backref="listing", lazy="dynamic")
-    # user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         image = True
