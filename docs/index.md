@@ -12,4 +12,3 @@ For full source code, visit [Freebay on GitHub](https://github.com/emmasandstorm
 - Follow the link in in the terminal to Freebay's homepage.
 
 
-Once the site is launched, you must first create a user and login to access most of the pages. You must also make your own listings to test those functions as well.
