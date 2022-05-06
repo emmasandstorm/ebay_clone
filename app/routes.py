@@ -62,30 +62,24 @@ def edit_profile():
     form = UserBioForm()
 
     if form.validate_on_submit():
-        user_bio = form.bio.data
-        bio = User.query.filter_by(user_profile=bio).first()
 
-        b = User(user_profile=user_bio)
-        b.set_bio(form.user_bio.data)
-        db.session.add(b)
+        user_bio = form.user_bio.data
+
+        current_user.user_profile = user_bio
         db.session.commit()
-        return redirect("/profile/userNAME")
+        return redirect("/")
         
     return render_template("editprofile.html", form=form)
 
-@myobj.route("/profile/<name>")
-def profile(name):
-    name = User.query.filter_by(username=name).first()
-    if name is not None:
-
-        bio = name.user_profile
-        if bio is None:
-            bio = "bio goes here"
+@myobj.route("/profile/<username>/", methods=["GET", "POST"])
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    #URL should be profile/username
+    #Display (Username)'s Profile as heading
+    #Get info from bio db to display under heading
     
     return render_template(
-        "profile.html", 
-        title=f"User {name}", 
-        name=name)
+        "profile.html", username=user.username, bio=user.user_profile)
 
 @myobj.route("/logout")
 @login_required
