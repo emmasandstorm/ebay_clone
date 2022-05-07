@@ -11,12 +11,12 @@ from flask import render_template, request, flash, redirect, session, url_for
 import os
 from werkzeug.utils import secure_filename
 
-
+#homepage
 @myobj.route("/")
 def home():
     return render_template("homepage.html")
 
-
+#login page
 @myobj.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -24,6 +24,7 @@ def login():
         username = form.username.data
         user = User.query.filter_by(username=username).first()
 
+        #successful login
         if user:
             if user.check_password(form.password.data):
                 flash("Successful Login!!")
@@ -31,6 +32,7 @@ def login():
 
                 return redirect("/")
             else:
+                #if text entered doesn't match database
                 flash("Incorrect Password")
         else:
             flash("Failed login")
@@ -57,7 +59,7 @@ def sign_up():
 
     return render_template("signup.html", form=form)
 
-
+#logout page is only a placeholder for the logout function, then redirects to login page
 @myobj.route("/logout")
 @login_required
 def logout():
@@ -81,7 +83,7 @@ def new_listing():
                 flash("Auction must end in the future.")
                 return redirect(request.referrer)
 
-        # Handle image upload
+        # Handle image validation and upload
         if not form.image.data:
             flash("Please select an image")
             return redirect(request.referrer)
@@ -100,6 +102,7 @@ def new_listing():
 
             file.save(os.path.join(myobj.config["UPLOAD_FOLDER"], filename))
 
+            # All data valid, image stored. Create and store new listing.
             l = Listing(
                 title=form.title.data,
                 description=form.description.data,
@@ -207,10 +210,12 @@ def display_listing(listing_id):
         )
     return redirect("/")
 
-
+#add to cart functionality
 @myobj.route("/addcart", methods=["POST"])
 @login_required
 def AddCart():
+    #creates a dictionary with all the important information about the listing, grabbed from the Listing database
+    #the dictionary is attributed to the user session, so it saves while the user is logged in.
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
     price = int(float(request.form.get("price")))
@@ -224,8 +229,10 @@ def AddCart():
                 "quantity": quantity,
             }
         }
+        #if there is already something in the cart
         if "Shoppingcart" in session:
             print(session["Shoppingcart"])
+            #trying to add the same item twice
             if listing_id in session["Shoppingcart"]:
                 flash("This product is already in your cart")
                 return redirect(request.referrer)
@@ -233,30 +240,34 @@ def AddCart():
                 session["Shoppingcart"] = MergeDicts(
                     session["Shoppingcart"], CartItems)
                 return redirect("/cart")
+        #if the cart is empty
         else:
             session["Shoppingcart"] = CartItems
             return redirect("/cart")
 
     return redirect("/")
 
-
+#display cart page
 @myobj.route("/cart", methods=["GET", "POST"])
 @login_required
 def display_cart():
+    #when there is nothing in the shopping cart, an empty cart is shown
     if "Shoppingcart" not in session:
         session["Shoppingcart"] = {}
     grandtotal = 0
+    #table in cart.html pulls all values accordingly and the grandtotal is calculated as well
     for key, item in session["Shoppingcart"].items():
         grandtotal += float(item["price"]) * float(item["quantity"])
     return render_template(
         "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
     )
 
-
+#removing an item functionality
 @myobj.route("/removecartitem/<int:id>")
 def removeitem(id):
     if "Shoppingcart" not in session and len(session["Shoppingcart"]) <= 0:
         return redirect("/")
+    #if the remove button is clicked, the shopping cart dictionary will be edited
     try:
         session.modified = True
         for key, item in session["Shoppingcart"].items():
@@ -275,6 +286,7 @@ def checkout():
     form = CreditCardForm()
     valid_card = False
 
+    # Validate credit card information (but don't check if it's a real card)
     if form.validate_on_submit():
         expire_year = 2000 + form.expire_year.data
         today = datetime.today()
@@ -294,6 +306,8 @@ def checkout():
                 valid_card = False
         else:
             flash("Card is expired, submit another card")
+
+        # Card validation was successful, purchase the contents of the cart
         if valid_card is True:
             if "Shoppingcart" in session and session["Shoppingcart"]:
                 try:

@@ -1,4 +1,6 @@
 class RequiredIf(object):
+    """Apply this to a field to make it dependent on the result of another field"""
+
     def __init__(self, **kwargs):
         self.conditions = kwargs
 
