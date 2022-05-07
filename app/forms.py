@@ -37,7 +37,7 @@ class ListingForm(FlaskForm):
     purchase_price = IntegerField(
         "Purchase Price",
         validators=[
-            Optional(),
+            RequiredIf(for_purchase=True),
             NumberRange(
                 min=0, max=1000000, message="Price must be between 0 and 1000000."
             ),
