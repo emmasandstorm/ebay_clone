@@ -4,7 +4,7 @@ from app import db
 from app import myobj
 from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
 from app.models import Bid, Listing, User
-from app.utils import allowed_file
+from app.utils import allowed_file, MergeDicts
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import render_template, request, flash, redirect, session, url_for
@@ -52,7 +52,8 @@ def sign_up():
             u.set_password(form.password.data)
             db.session.add(u)
             db.session.commit()
-            return redirect("/login")
+            login_user(u)
+            return redirect("/")
         else:
             flash("Username taken, please select another one.")
 
@@ -114,12 +115,7 @@ def new_listing():
             db.session.add(l)
             db.session.commit()
 
-            return render_template(
-                "newlisting.html",
-                title="New Listing",
-                form=form,
-                filename=l.image,
-            )
+            return redirect("/listing/" + str(l.id))
     return render_template("newlisting.html", title="New Listing", form=form)
 
 
@@ -213,14 +209,6 @@ def display_listing(listing_id):
             filename=listing.image,
         )
     return redirect("/")
-
-#function required for cart - when more than one item is added to the cart
-def MergeDicts(dict1, dict2):
-    if isinstance(dict1, list) and isinstance(dict2, list):
-        return dict1 + dict2
-    elif isinstance(dict1, dict) and isinstance(dict2, dict):
-        return dict(list(dict1.items()) + list(dict2.items()))
-    return False
 
 #add to cart functionality
 @myobj.route("/addcart", methods=["POST"])
@@ -327,9 +315,13 @@ def checkout():
                     for key, item in session["Shoppingcart"].items():
                         listing = Listing.query.filter_by(id=int(key)).first()
                         if listing is not None:
-                            listing.sold = True
-                            listing.buyer = current_user
-                            db.session.commit()
+                            if listing.sold == False:
+                                listing.sold = True
+                                listing.buyer = current_user
+                                db.session.commit()
+                            else:
+                                flash(
+                                    f"{listing.title} was purchased by another user while in your cart. Sorry! Gotta be quick on FreEbay!")
                     session["Shoppingcart"].clear()
                 except Exception as e:
                     print(e)
@@ -343,11 +335,3 @@ def checkout():
         title="Checkout",
         form=form,
     )
-
-
-"""
-@myobj.route("/display/<filename>")
-def display_image(filename):
-    for i in range(10):
-        print(i)
-    return redirect(url_for("static", filename="images/" + filename), code=302)"""
