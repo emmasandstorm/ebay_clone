@@ -89,6 +89,20 @@ def logout():
     logout_user()
     return redirect("/login")
 
+@myobj.route('/delete/<username>')
+@login_required
+def delete(username):
+	if username == current_user.username:
+		removed_user = User.query.get_or_404(username)
+
+		db.session.delete(removed_user)
+		db.session.commit()
+		flash("Your account has been removed!")
+
+		return redirect("/")
+	else:
+		flash("You can only delete your own account!")
+		return redirect("/profile/edit")
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
 @login_required
