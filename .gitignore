@@ -6,3 +6,6 @@ app/*.db
 
 #Do not store mkdocs deployment files in version control
 site/*
+
+#Do not store images in version control
+app/static/images/*
