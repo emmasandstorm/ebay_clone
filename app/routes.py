@@ -37,7 +37,7 @@ def login():
                 return redirect("/")
             else:
                 # if text entered doesn't match database
-                flash("Incorrect Password")
+                flash("Failed login")
         else:
             flash("Failed login")
     return render_template("login.html", form=form)
