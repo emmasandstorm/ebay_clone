@@ -4,7 +4,7 @@
 - Evan Astle (@starphys)
 - Cathy Hernandez (@CatHer431)
 
-View our Documentation via Mkdocs: https://emmasandstorm.github.io/ebay_clone/
+View our Documentation via Mkdocs: https://emmasandstorm.github.io/ebay_clone/  
 Gantt chart here: https://docs.google.com/spreadsheets/d/1a7kcufbNOzeahiPWKmxPnOOT0f559uUk5wxutB36rXQ/edit?usp=sharing
 
 Dependencies: 
