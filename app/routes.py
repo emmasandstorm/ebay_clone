@@ -2,7 +2,7 @@ from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
-from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm
+from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Bid, Listing, User
 from app.utils import allowed_file, MergeDicts
 from datetime import datetime
@@ -19,8 +19,6 @@ def home():
     return render_template("homepage.html")
 
 # login page
-
-
 @myobj.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -42,7 +40,6 @@ def login():
             flash("Failed login")
     return render_template("login.html", form=form)
 
-
 @myobj.route("/signup", methods=["GET", "POST"])
 def sign_up():
     form = SignUpForm()
@@ -63,15 +60,51 @@ def sign_up():
 
     return render_template("signup.html", form=form)
 
-# logout page is only a placeholder for the logout function, then redirects to login page
+@myobj.route("/profile/edit", methods=["GET", "POST"])
+@login_required
+def edit_profile():
+    form = UserBioForm()
 
+    if form.validate_on_submit():
 
+        user_bio = form.user_bio.data
+
+        current_user.user_profile = user_bio
+        db.session.commit()
+        return redirect("/")
+        
+    return render_template("editprofile.html", username=current_user.username, form=form)
+
+@myobj.route("/profile/<username>/", methods=["GET", "POST"])
+def profile(username):
+    user = User.query.filter_by(username=username).first()
+    if user is not None:
+        return render_template(
+            "profile.html", username=user.username, bio=user.user_profile)
+    else:
+        return redirect("/")
+
+#logout page is only a placeholder for the logout function, then redirects to login page
 @myobj.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect("/login")
 
+@myobj.route('/delete/<username>')
+@login_required
+def delete(username):
+	if username == current_user.username:
+		removed_user = User.query.get_or_404(username)
+
+		db.session.delete(removed_user)
+		db.session.commit()
+		flash("Your account has been removed!")
+
+		return redirect("/")
+	else:
+		flash("You can only delete your own account!")
+		return redirect("/profile/edit")
 
 @myobj.route("/newlisting", methods=["GET", "POST"])
 @login_required
@@ -217,8 +250,6 @@ def display_listing(listing_id):
     return redirect("/")
 
 # add to cart functionality
-
-
 @myobj.route("/addcart", methods=["POST"])
 @login_required
 def AddCart():
@@ -256,8 +287,6 @@ def AddCart():
     return redirect("/")
 
 # display cart page
-
-
 @myobj.route("/cart", methods=["GET", "POST"])
 @login_required
 def display_cart():
@@ -273,8 +302,6 @@ def display_cart():
     )
 
 # removing an item functionality
-
-
 @myobj.route("/removecartitem/<int:id>")
 def removeitem(id):
     if "Shoppingcart" not in session and len(session["Shoppingcart"]) <= 0:

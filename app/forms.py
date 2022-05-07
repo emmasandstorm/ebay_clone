@@ -21,9 +21,13 @@ class LoginForm(FlaskForm):
 
 
 class SignUpForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    username = StringField("Username", validators = [DataRequired()])
+    password = PasswordField("Password", validators = [DataRequired()])
     submit = SubmitField("Register")
+
+class UserBioForm(FlaskForm):
+    user_bio = StringField("Biography", validators = [DataRequired()])
+    submit = SubmitField("Save Bio")
 
 
 class ListingForm(FlaskForm):
