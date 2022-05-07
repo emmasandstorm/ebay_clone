@@ -53,7 +53,7 @@ def sign_up():
             db.session.commit()
             return redirect("/login")
         else:
-            flash("You Already Have an Account!")
+            flash("Username taken, please select another one.")
 
     return render_template("signup.html", form=form)
 
@@ -71,33 +71,16 @@ def edit_profile():
         db.session.commit()
         return redirect("/")
         
-    return render_template("editprofile.html", form=form)
+    return render_template("editprofile.html", username=current_user.username, form=form)
 
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
     user = User.query.filter_by(username=username).first()
-    
-    return render_template(
-        "profile.html", username=user.username, bio=user.user_profile)
-
-@myobj.route("/signup", methods=["GET", "POST"])
-def sign_up():
-    form = SignUpForm()
-
-    if form.validate_on_submit():
-        username = form.username.data
-        user = User.query.filter_by(username=username).first()
-
-        if not user:
-            u = User(username=username)
-            u.set_password(form.password.data)
-            db.session.add(u)
-            db.session.commit()
-            return redirect("/login")
-        else:
-            flash("Username taken, please select another one.")
-
-    return render_template("signup.html", form=form)
+    if user is not None:
+        return render_template(
+            "profile.html", username=user.username, bio=user.user_profile)
+    else:
+        return redirect("/")
 
 #logout page is only a placeholder for the logout function, then redirects to login page
 @myobj.route("/logout")
