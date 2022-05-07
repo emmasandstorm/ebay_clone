@@ -28,6 +28,7 @@
       <p>${{form.price}}.00 {{form.submit()}}</p> 
     {% endif %}
     {% if winner and checkout and not listing.sold %}
+      <p class="winner"> Congratulations! You won the auction! Your final bid was {{"${:,.2f}".format(price)}}. Please complete your purchase now: </p> 
       <form action = "/addcart" method="POST" >  
         <input type="hidden" name= "listing_id" value= "{{listing.id}}">
         <input type="hidden" name = "quantity" value="1">
