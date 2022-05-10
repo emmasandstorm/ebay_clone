@@ -3,7 +3,43 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title> {% block title %}{% endblock %}</title>
     </head>
+
     <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand">Navbar</a>
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/home">Home</a>
+            <a class="nav-link" href="/signup">Sign Up</a>
+            <a class="nav-link" href="/login">Login</a>
+            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link" href="/newlisting">Create Listing</a>
+            <a class="nav-link" href="/cart">Cart ({{session['Shoppingcart']|length}})</a>
+          </div>
+          <form class="d-flex input-group w-auto">
+            <input
+              type="search"
+              class="form-control rounded"
+              placeholder="Search"
+              aria-label="Search"
+              aria-describedby="search-addon"
+            />
+            <span class="input-group-text border-0" id="search-addon">
+              <i class="fas fa-search"></i>
+            </span>
+          </form>
+        </div>
+      </nav>
+
+
+
+
+
+
+
+
+
+        <!--
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">FreEbay</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,11 +65,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/cart">Cart ({{session['Shoppingcart']|length}})</a>
                   </li>
-                  <!--look into flex css to fix this-->
+                  look into flex css to fix this
+                  <div class="d-flex align-items-center">
                   <form class="form-inline my-2 my-lg-0" action="#">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                  </form>
+                  </form></div>-->
               </ul>
             </div>
           </nav>
