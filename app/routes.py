@@ -1,4 +1,3 @@
-from requests import session
 from sqlalchemy import true
 from app import db
 from app import myobj
@@ -7,13 +6,11 @@ from app.models import Bid, Listing, User
 from app.utils import allowed_file, MergeDicts
 from datetime import datetime
 from flask_login import current_user, login_user, logout_user, login_required
-from flask import render_template, request, flash, redirect, session, url_for
+from flask import render_template, request, flash, redirect, session
 import os
 from werkzeug.utils import secure_filename
 
 # homepage
-
-
 @myobj.route("/")
 def home():
     return render_template("homepage.html")
@@ -40,6 +37,7 @@ def login():
             flash("Failed login")
     return render_template("login.html", form=form)
 
+
 @myobj.route("/signup", methods=["GET", "POST"])
 def sign_up():
     form = SignUpForm()
@@ -60,6 +58,7 @@ def sign_up():
 
     return render_template("signup.html", form=form)
 
+
 @myobj.route("/profile/edit", methods=["GET", "POST"])
 @login_required
 def edit_profile():
@@ -72,7 +71,7 @@ def edit_profile():
         current_user.user_profile = user_bio
         db.session.commit()
         return redirect("/")
-        
+
     return render_template("editprofile.html", username=current_user.username, form=form)
 
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
@@ -84,7 +83,7 @@ def profile(username):
     else:
         return redirect("/")
 
-#logout page is only a placeholder for the logout function, then redirects to login page
+# logout page is only a placeholder for the logout function, then redirects to login page
 @myobj.route("/logout")
 @login_required
 def logout():
@@ -153,7 +152,6 @@ def new_listing():
 
             return redirect("/listing/" + str(l.id))
     return render_template("newlisting.html", title="New Listing", form=form)
-
 
 @myobj.route("/listing/<listing_id>", methods=["GET", "POST"])
 def display_listing(listing_id):
@@ -314,7 +312,6 @@ def removeitem(id):
     except Exception as e:
         print(e)
         return redirect("/cart")
-
 
 @myobj.route("/checkout", methods=["GET", "POST"])
 @login_required
