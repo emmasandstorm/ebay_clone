@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     user_profile = db.Column(db.String(256))
+    
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
     bids = db.relationship("Bid", backref="bidder", lazy="dynamic")
 
@@ -27,18 +28,21 @@ class Listing(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     title = db.Column(db.String(128))
     description = db.Column(db.String(256))
+    seller_id = db.Column(db.Integer)
+    image = db.Column(
+        db.String(256)
+    )  # store the file name since all images are in the same directory
+    
     for_purchase = db.Column(db.Boolean, default=False)
     purchase_price = db.Column(
         db.Integer
     )  # Dollars only, working with cents presents too many questions
     for_auction = db.Column(db.Boolean, default=False)
     auction_end = db.Column(db.DateTime)
-    image = db.Column(
-        db.String(256)
-    )  # store the file name since all images are in the same directory
     sold = db.Column(db.Boolean, default=False)
 
     buyer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
     bids = db.relationship("Bid", backref="listing", lazy="dynamic")
 
     def __repr__(self):
