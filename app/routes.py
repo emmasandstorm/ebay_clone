@@ -1,6 +1,7 @@
 from sqlalchemy import true
 from app import db
 from app import myobj
+from app import search
 from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Bid, Listing, User
 from app.utils import allowed_file, MergeDicts
@@ -153,6 +154,12 @@ def new_listing():
             return redirect("/listing/" + str(l.id))
     return render_template("newlisting.html", title="New Listing", form=form)
 
+@myobj.route("/search")
+def searchresult():
+    searchword = request.args.get('q')
+    items = Listing.query.msearch(searchword, fields = ['title', 'description', 'purchase_price'], limit=10)
+    return render_template('search.html', items=items, q=searchword)
+
 @myobj.route("/listing/<listing_id>", methods=["GET", "POST"])
 def display_listing(listing_id):
     listing = Listing.query.filter_by(id=listing_id).first()
@@ -253,6 +260,7 @@ def AddCart():
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
     price = int(float(request.form.get("price")))
+    image = request.form.get("image")
     product = Listing.query.filter_by(id=listing_id).first()
     if listing_id and quantity and request.method == "POST":
         CartItems = {
@@ -261,6 +269,7 @@ def AddCart():
                 "price": price,
                 "description": product.description,
                 "quantity": quantity,
+                "image": image,
             }
         }
         # if there is already something in the cart
