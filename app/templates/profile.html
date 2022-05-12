@@ -3,4 +3,9 @@
 {% block head %}<h1>{{username}}'s Profile</h1>{% endblock %}
 {% block content %} 
     <p>{{bio}}</p>
+    <ul>
+        {% for listing in collection %}
+            <li><a href="/listing/{{listing.id}}">{{listing.title}}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
