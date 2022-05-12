@@ -78,12 +78,10 @@ def edit_profile():
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
-        print(user.collection)
-        for listing in user.collection:
-            print(listing)
         return render_template(
             "profile.html", username=user.username, bio=user.user_profile, collection=user.collection)
     else:
+        flash("No such user")
         return redirect("/")
 
 # logout page is only a placeholder for the logout function, then redirects to login page
