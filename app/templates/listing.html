@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 {% block title %} {{title}} {% endblock%}
-{% block head %}<h1>{{title}}
+{% block head %}<div class="listing">{{title}}
   {% if listing.sold %}
   - SOLD to {{listing.buyer.username}}
   {% endif %}
-</h1>{% endblock %}
+</div>
+<link rel = "stylesheet" href = '/static/listingcard.css'>
+{% endblock %}
 {% block content %}
-  <p>{{listing.title}}</p>
+<body>
+  <div class = 'title'>{{listing.title}}</div>
+  {% if filename %}
+  <div class="image">
+    <img src='{{ url_for("static", filename="images/" + filename) }}' />
+  </div>
+  {% endif %}
   <p>{{description}}</p>
   {% if for_purchase and not listing.sold and not winner %}
   <p>{{"${:,.2f}".format(price)}}</p>
@@ -36,9 +44,6 @@
         <button type="submit" class="btn btn-sm btn-warning"> Add to Cart</button>
     {% endif %}
   {% endif %}
-  {% if filename %}
-  <div>
-    <img src='{{ url_for("static", filename="images/" + filename) }}' />
-  </div>
-  {% endif %}
+
+</body>
 {% endblock %}

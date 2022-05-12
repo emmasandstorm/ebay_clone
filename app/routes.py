@@ -14,7 +14,8 @@ from werkzeug.utils import secure_filename
 # homepage
 @myobj.route("/")
 def home():
-    return render_template("homepage.html")
+    items = Listing.query.all()
+    return render_template("homepage.html", items = items)
 
 # login page
 @myobj.route("/login", methods=["GET", "POST"])
