@@ -1,16 +1,19 @@
-class RequiredIf(object):
-    """Apply this to a field to make it dependent on the result of another field"""
+from wtforms.validators import Optional
 
-    def __init__(self, **kwargs):
-        self.conditions = kwargs
+
+class OptionalIfFieldEqualTo(Optional):
+    """https://stackoverflow.com/questions/8463209/how-to-make-a-field-conditionally-optional-in-wtforms"""
+    # a validator which makes a field optional if
+    # another field has a desired value
+
+    def __init__(self, other_field_name, value, *args, **kwargs):
+        self.other_field_name = other_field_name
+        self.value = value
+        super(OptionalIfFieldEqualTo, self).__init__(*args, **kwargs)
 
     def __call__(self, form, field):
-        if form.data.get(field.name) == "None":
-            for name, value in self.conditions:
-                if name not in form.data:
-                    continue
-                condition = form.data.get(name)
-                if value == condition:
-                    raise Exception(
-                        f"{field.name} field is required when {name} field is {condition}"
-                    )
+        other_field = form._fields.get(self.other_field_name)
+        if other_field is None:
+            raise Exception('no field named "%s" in form' % self.other_field_name)
+        if other_field.data == self.value:
+            super(OptionalIfFieldEqualTo, self).__call__(form, field)

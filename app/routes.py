@@ -74,13 +74,15 @@ def edit_profile():
 
     return render_template("editprofile.html", username=current_user.username, form=form)
 
+# profile page displays username, bio, and collection of valid users
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
         return render_template(
-            "profile.html", username=user.username, bio=user.user_profile)
+            "profile.html", username=user.username, bio=user.user_profile, collection=user.collection)
     else:
+        flash("No such user")
         return redirect("/")
 
 # logout page is only a placeholder for the logout function, then redirects to login page
