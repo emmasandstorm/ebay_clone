@@ -23,6 +23,7 @@ class User(UserMixin, db.Model):
 
 
 class Listing(db.Model):
+    __searchable__= ['title','description', 'purchase_price']
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     title = db.Column(db.String(128))
