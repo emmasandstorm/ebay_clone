@@ -74,6 +74,7 @@ def edit_profile():
 
     return render_template("editprofile.html", username=current_user.username, form=form)
 
+# profile page displays username, bio, and collection of valid users
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
     user = User.query.filter_by(username=username).first()
