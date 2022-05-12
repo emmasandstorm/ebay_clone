@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 {% block title %} FreEbay Home {% endblock %}
-{% block head %}<h1> Welcome to FreEbay! </h1>{% endblock %}
 {% block content %}
-<p>First time? Please sign up! <form action = "/signup" method="GET" >  
+<head>
+  <div class = "title">
+    <h1>Welcome to FreEbay!!</h1>
+  </div>
+  <link rel = "stylesheet" href = '/static/cartformats.css'>
+</head>
+<p>
+  <div class = 'p'> First time? Please sign up! <form action = "/signup" method="GET" >  
     <button type="submit" class="btn btn-sm btn-warning">Register</button>
-  </form>
-  <br>Returning user? Make sure you're logged in: <form action = "/login" method="GET" >  
+  </form> </div>
+  <br>
+  <div class = 'p'>Returning user? Make sure you're logged in: <form action = "/login" method="GET" >  
     <button type="submit" class="btn btn-sm btn-warning">Login</button>
-  </form>
-  <br>Already logged in? Why not make a post! <form action = "/newlisting" method="GET" >  
+  </form></div>
+  <br>
+  <div class = 'p'>Already logged in? Why not make a post! <form action = "/newlisting" method="GET" >  
     <button type="submit" class="btn btn-sm btn-warning">Create Listing</button>
-  </form>
+  </form></div>
   <br>This page will have a list of all listings soon, but until then you can find them by 
   navigating to 5000/listing/# where # is the unique id of the listing you want to see
   <br>(Since this is still a local deployment, you have to make listings yourself. Ids are in creation order, starting at 1).
