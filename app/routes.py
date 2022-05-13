@@ -144,11 +144,12 @@ def new_listing():
             l = Listing(
                 title=form.title.data,
                 description=form.description.data,
+                seller_id=current_user.id,
+                image=filename,
                 for_purchase=form.for_purchase.data,
                 purchase_price=form.purchase_price.data,
                 for_auction=form.for_auction.data,
                 auction_end=form.auction_end.data,
-                image=filename,
             )
             db.session.add(l)
             db.session.commit()
