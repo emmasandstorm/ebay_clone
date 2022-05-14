@@ -81,7 +81,7 @@ def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
         return render_template(
-            "profile.html", username=user.username, bio=user.user_profile, collection=user.collection)
+            "profile.html", username=user.username, bio=user.user_profile, items=user.collection)
     else:
         flash("No such user")
         return redirect("/")

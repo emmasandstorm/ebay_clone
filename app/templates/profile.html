@@ -2,10 +2,31 @@
 {% block title %} My Account {% endblock %}
 {% block head %}<h1>{{username}}'s Profile</h1>{% endblock %}
 {% block content %} 
-    <p>{{bio}}</p>
-    <ul>
-        {% for listing in collection %}
-            <li><a href="/listing/{{listing.id}}">{{listing.title}}</li>
-        {% endfor %}
-    </ul>
+<link rel = "stylesheet" href = '/static/listingcard.css'>    
+<p>{{bio}}</p>
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Details</th>
+            </thead>
+            <tbody>
+                {% if items %}
+                {% for item in items %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" width="auto" height="100px"/></td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.description}}</td>
+                    <td><a href="/listing/{{item.id}}" class='btn btn-sm'>Details</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p>No items to display in your collection, try buying some!</p>
+                {% endif %}
+            
+            </tbody>
+        </table>
 {% endblock %}
