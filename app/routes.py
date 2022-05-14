@@ -263,7 +263,6 @@ def AddCart():
     listing_id = request.form.get("listing_id")
     quantity = int(request.form.get("quantity"))
     price = int(float(request.form.get("price")))
-    image = request.form.get("image")
     product = Listing.query.filter_by(id=listing_id).first()
     if listing_id and quantity and request.method == "POST":
         CartItems = {
@@ -272,7 +271,7 @@ def AddCart():
                 "price": price,
                 "description": product.description,
                 "quantity": quantity,
-                "image": image,
+                "image": product.image,
             }
         }
         # if there is already something in the cart
