@@ -30,4 +30,7 @@ The completed requirements are:
 - Add to cart/ View cart (Emma) #5
 - Buy listing (Evan) #6
 
+For Final Milestone:
+- Display user's purchases on user profile (Evan) #Extra
+
 

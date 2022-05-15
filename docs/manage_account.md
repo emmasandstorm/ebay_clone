@@ -33,4 +33,4 @@ To logout, you must press the logout button on the navbar. It will redirect you 
 
 ## User Profile
 
-How to view and edit your own user profile (coming soon).
+All user profiles are located at /profile/<username>/. Your user profile displays your username, bio, and collection of purchased items. 
