@@ -91,6 +91,7 @@ def profile(username):
 @login_required
 def logout():
     logout_user()
+    session.clear()
     return redirect("/login")
 
 @myobj.route("/delete/<username>/", methods=["GET", "POST"])
