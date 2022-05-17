@@ -9,6 +9,11 @@
 {% else %}
 <p>Go to /profile/edit/ to set your bio!</p>
 {% endif %}
+{% if show_buttons %}
+    <form action = "/profile/edit" method="POST" >  
+        <button type="submit" class="btn">Edit Bio</button>
+    </form>
+{% endif %}
 <hr>
 <div class = 'head-sm'> {{username}}'s Collection
 </div>
@@ -39,5 +44,12 @@
 </div>
 {% else %}
 <p>No items to display in your collection, try buying some!</p>
+{% endif %}
+
+{% if show_buttons %}
+    <p>Press the button below to permanently, irretrievably delete your account</p>
+    <form action = "/delete/{{username}}/" method="POST" > 
+        <button type="submit" class="btn btn-delete">Delete Account</button>
+    </form>
 {% endif %}
 {% endblock %}

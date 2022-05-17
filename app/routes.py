@@ -81,6 +81,8 @@ def edit_profile():
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
+        if user == current_user:
+            return render_template( "profile.html", username=user.username, bio=user.user_profile, items=user.collection, show_buttons=True)
         return render_template(
             "profile.html", username=user.username, bio=user.user_profile, items=user.collection)
     else:
