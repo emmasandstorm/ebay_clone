@@ -304,7 +304,7 @@ def display_cart():
     grandtotal = 0
     # table in cart.html pulls all values accordingly and the grandtotal is calculated as well
     for key, item in session["Shoppingcart"].items():
-        grandtotal += float(item["price"]) * float(item["quantity"])
+        grandtotal += int(float(item["price"])) * int(float(item["quantity"]))
     return render_template(
         "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
     )

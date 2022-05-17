@@ -2,9 +2,10 @@
 {% block title %} FreEbay Cart {% endblock%}
 {% block head %}<h1>Cart</h1>{% endblock %}
 {% block content %} 
+<link rel = "stylesheet" href = '/static/listingcard.css'>
 <div class="container">
     <div class="row">
-        <table class="table table-sm">
+        <table class="table">
             <thead>
                 <th>Item Number</th>
                 <th>Image</th>
@@ -26,20 +27,20 @@
                     <td>{{item.quantity}}</td>
                     {% set subtotal = item.quantity|int * item.price %}
                     <td>${{subtotal}}</td>
-                    <td><a href="{{url_for('removeitem', id=key)}}" class='btn btn-sm btn-danger'>Remove</a></td>
+                    <td><a href="{{url_for('removeitem', id=key)}}" class='btn'>Remove</a></td>
                 </tr>
                 {% endfor %}
             
             </tbody>
         </table>
                   
-            <p>Grand Total: ${{grandtotal}}</p>
+            <p>Grand Total: ${{grandtotal}}.00</p>
        
             <p><form action = "/checkout" method="GET" >  
-                <button type="submit" class="btn btn-sm btn-warning"> Checkout</button>
+                <button type="submit" class="btn"> Checkout</button>
               </form></p>
             <p><form action = "/" method="GET" >  
-                <button type="submit" class="btn btn-sm btn-warning"> Continue Shopping</button>
+                <button type="submit" class="btn"> Continue Shopping</button>
               </form></p>
     </div>
 </div>
