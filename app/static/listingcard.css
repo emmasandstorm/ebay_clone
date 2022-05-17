@@ -1,10 +1,73 @@
 .title{
-    color: red;
-    font-size: large;
+    color: #Cf5c36;
+    font-size: 80px;
     font-style: Georgia, Georgia, 'Times New Roman', Times, serif;
+    padding: 30px;
+}
+
+.head-sm {
+    font-size: 40px;
+    font-style: Georgia, Georgia, 'Times New Roman', Times, serif;
+    color: #Cf5c36;
 }
 
 .btn{
     background-color: #7c7c7c;
     color: white;
+}
+
+.btn-sm {
+    background-color: #7c7c7c;
+    color: white;
+    padding: 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+}
+
+.listing {
+    font-size: medium;
+    color:black;
+    font-style: Georgia, Georgia, 'Times New Roman', Times, serif;
+}
+
+.p {
+    margin-left: 100px;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+p {
+    font-family: Georgia, Georgia, 'Times New Roman', Times, serif;
+    margin-left: 80px;
+}
+
+body {
+    background-color: #efc88b;
+}
+
+
+th, td {
+    border-bottom: 2px solid #7c7c7c;
+}
+
+th {
+    background: #7c7c7c;
+    color: black;
+}
+
+table {
+    width: 75%;
+    border-collapse: collapse;
+}
+
+.image {
+    margin-left: 100px;
+}
+
+.container {
+    border: black;
+
 }
