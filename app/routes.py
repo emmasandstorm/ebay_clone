@@ -180,7 +180,12 @@ def display_listing(listing_id):
         # Handle bidding for auctionable items
         if listing.for_auction is True:
 
-            highest_bid = listing.bids.order_by(Bid.value.desc()).first()
+            # If any bids, find highest bid from existing user
+            all_bids = listing.bids.order_by(Bid.value.desc())
+            for bid in all_bids:
+                if bid.bidder is not None:
+                    highest_bid = bid
+                    break
             if highest_bid is None:
                 highest_bid = Bid(value=0)
 
@@ -218,7 +223,7 @@ def display_listing(listing_id):
             # Auction has ended, do not accept bids
             else:
                 # Someone won the auction, only they should see checkout
-                if highest_bid.bidder is not None:
+                if highest_bid.value > 0:
                     if current_user == highest_bid.bidder:
                         return render_template(
                             "listing.html",
@@ -246,7 +251,7 @@ def display_listing(listing_id):
                             winner=True,
                             checkout=False
                         )
-        # Either no auction or auction ended with no bids
+        # Either no auction or auction ended with no valid bids
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
