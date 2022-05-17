@@ -25,7 +25,7 @@ class SignUpForm(FlaskForm):
     submit = SubmitField("Register")
 
 class UserBioForm(FlaskForm):
-    user_bio = StringField("Biography", validators = [DataRequired()])
+    user_bio = StringField("Biography")
     submit = SubmitField("Save Bio")
 
 

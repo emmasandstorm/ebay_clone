@@ -1,13 +1,15 @@
 {% extends "base.html"%}
-{% block title %} "Edit My Profile" {% endblock %}
+{% block title %} Edit My Profile {% endblock %}
 {% block head %}<h1>{{username}}'s Bio</h1>{% endblock %}
 {% block content %} 
     <form action="" method="POST">
-        {{ form.hidden_tag() }}
+        {{ bio_form.hidden_tag() }}
         <p>
-            {{ form.user_bio.label }}<br>
-            {{ form.user_bio(size=100) }}
+            {{ bio_form.user_bio.label }}<br>
+            {{ bio_form.user_bio(size=100) }}
 	<p>
-        <p>{{ form.submit() }}</p>
+        <p>{{ bio_form.submit() }}</p>
     </form>
+    <a href="/delete" class="btn btn-primary">Delete Account</a>
+    
 {% endblock %}

@@ -57,48 +57,20 @@ def sign_up():
 
     return render_template("signup.html", form=form)
 
-<<<<<<< HEAD
 @myobj.route("/profile/edit", methods=["GET", "POST"])
 @login_required
 def edit_profile():
-    form = UserBioForm()
+    bio_form = UserBioForm()
+    
+    if bio_form.validate_on_submit():
 
-    if form.validate_on_submit():
-
-        user_bio = form.user_bio.data
+        user_bio = bio_form.user_bio.data
 
         current_user.user_profile = user_bio
         db.session.commit()
         return redirect("/")
         
-    return render_template("editprofile.html", username=current_user.username, form=form)
-
-@myobj.route("/profile/<username>/", methods=["GET", "POST"])
-def profile(username):
-    user = User.query.filter_by(username=username).first()
-    if user is not None:
-        return render_template(
-            "profile.html", username=user.username, bio=user.user_profile)
-    else:
-        return redirect("/")
-
-#logout page is only a placeholder for the logout function, then redirects to login page
-=======
-
-@myobj.route("/profile/edit", methods=["GET", "POST"])
-@login_required
-def edit_profile():
-    form = UserBioForm()
-
-    if form.validate_on_submit():
-
-        user_bio = form.user_bio.data
-
-        current_user.user_profile = user_bio
-        db.session.commit()
-        return redirect("/")
-
-    return render_template("editprofile.html", username=current_user.username, form=form)
+    return render_template("editprofile.html", username=current_user.username, bio_form=bio_form)
 
 # profile page displays username, bio, and collection of valid users
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
@@ -112,17 +84,17 @@ def profile(username):
         return redirect("/")
 
 # logout page is only a placeholder for the logout function, then redirects to login page
->>>>>>> b09a24abe6f6fa27b0e383aab7599017decf413d
 @myobj.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect("/login")
 
-@myobj.route("/delete/<username>/", methods=["GET", "POST"])
+@myobj.route("/delete", methods=["GET", "POST"])
 @login_required
-def delete(username):
-    if username == current_user.username:
+def delete():
+    user = current_user.username
+    if user == current_user.username:
         db.session.delete(current_user)
         db.session.commit()
         flash("Your account has been removed!")
