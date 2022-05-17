@@ -39,10 +39,11 @@
               {% if items %}
               {% for item in items %}
               <tr>
-                  <td><img src="{{item.image}}" width="auto" height="100px"/></td>
+                  <td><img src="{{ url_for('static', filename='images/' + item.image) }}" width="auto" height="100px"/></td>
                   <td>{{item.title}}</td>
                   <td>{{item.description}}</td>
-                  <td>${{item.purchase_price}}</td>
+                  {% if item.purchase_price %}<td>${{item.purchase_price}}.00</td>
+                  {% else %}<td>No price</td>{% endif %}
                   <td><a href="/listing/{{item.id}}" class='btn btn-sm'>Details</a></td>
               </tr>
               {% endfor %}
