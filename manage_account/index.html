@@ -61,13 +61,13 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#create-account">Create Account</a>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-profile">User Profile</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#delete-account">Delete Account</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#login">Login</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#logout">Logout</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#user-profile">User Profile</a>
     </li>
     </ul>
                 </li>
@@ -97,11 +97,14 @@
               
                 <h1 id="account-management">Account Management</h1>
 <p>The user system is a database that consists of a user id, user submitted username and password. The password automatically generates a password_hash that is used to check the password when logging in.</p>
-<p>Also included in the user database is the relationship of being a buyer. Once a customer makes a purchase, their user id is tied to that listing and they're now marked as the buyer of the listing. This allows the user to view all past purchases (coming soon).</p>
+<p>Also included in the user database is the relationship of being a buyer. Once a customer makes a purchase, their user id is tied to that listing and they're now marked as the buyer of the listing. This allows the user to view all past purchases.</p>
 <h2 id="create-account">Create Account</h2>
 <p>Users create new accounts from the signup page. Choose a unique username and any password, then press Register. Your credentials will be stored in the database, and now you can log in!</p>
+<h2 id="user-profile">User Profile</h2>
+<p>All user profiles are located at /profile/&lt;username>/. Your user profile displays your username, bio, and collection of purchased items. Click Profile in the top bar to go to your profile!</p>
+<p>Profiles also have bios, which you can fill in by clicking on the Edit Bio button.</p>
 <h2 id="delete-account">Delete Account</h2>
-<p>Account deletion coming soon</p>
+<p>To delete your account, press the red Delete Account button at the bottom of the page. Be careful, this action will not be confirmed and cannot be reversed. </p>
 <h2 id="login">Login</h2>
 <p>Navigate to /login page by clicking the Login button in the top Navbar. Additionally, if you try to access any page that requires a login, it will redirect you to the login page to log you in. Once on the Login Page, you must enter your:</p>
 <ul>
@@ -114,8 +117,6 @@
 <h2 id="logout">Logout</h2>
 <p>You must be logged in to logout.</p>
 <p>To logout, you must press the logout button on the navbar. It will redirect you to a logout page. If you are not logged in, you will be redirected to the login page so you can logout. If you are logged in, the system will log you out of the session and take you back to the login page.</p>
-<h2 id="user-profile">User Profile</h2>
-<p>How to view and edit your own user profile (coming soon).</p>
               
             </div>
           </div><footer>
