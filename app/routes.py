@@ -285,7 +285,6 @@ def AddCart():
         }
         # if there is already something in the cart
         if "Shoppingcart" in session:
-            print(session["Shoppingcart"])
             # trying to add the same item twice
             if listing_id in session["Shoppingcart"]:
                 flash("This product is already in your cart")
