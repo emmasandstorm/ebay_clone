@@ -182,12 +182,11 @@ def display_listing(listing_id):
 
             # If any bids, find highest bid from existing user
             all_bids = listing.bids.order_by(Bid.value.desc())
+            highest_bid = Bid(value=0)
             for bid in all_bids:
                 if bid.bidder is not None:
                     highest_bid = bid
                     break
-            if highest_bid is None:
-                highest_bid = Bid(value=0)
 
             # Auction is ongoing, accept bids
             if datetime.now() < listing.auction_end:
