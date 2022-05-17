@@ -5,22 +5,53 @@
   <div class = "title">
     <h1>Welcome to FreEbay!!</h1>
   </div>
-  <link rel = "stylesheet" href = '/static/cartformats.css'>
+  <link rel = "stylesheet" href = '/static/listingcard.css'>
+
 </head>
-<p>
+
   <div class = 'p'> First time? Please sign up! <form action = "/signup" method="GET" >  
-    <button type="submit" class="btn btn-sm btn-warning">Register</button>
+    <button type="submit" class="btn-sm">Register</button>
   </form> </div>
   <br>
   <div class = 'p'>Returning user? Make sure you're logged in: <form action = "/login" method="GET" >  
-    <button type="submit" class="btn btn-sm btn-warning">Login</button>
+    <button type="submit" class="btn-sm">Login</button>
   </form></div>
   <br>
   <div class = 'p'>Already logged in? Why not make a post! <form action = "/newlisting" method="GET" >  
-    <button type="submit" class="btn btn-sm btn-warning">Create Listing</button>
+    <button type="submit" class="btn-sm">Create Listing</button>
   </form></div>
-  <br>This page will have a list of all listings soon, but until then you can find them by 
-  navigating to 5000/listing/# where # is the unique id of the listing you want to see
-  <br>(Since this is still a local deployment, you have to make listings yourself. Ids are in creation order, starting at 1).
-</p>
+
+
+<hr>
+<div class = 'head-sm'> Current Items for Sale
+</div>
+{% if items %}
+<div class="container">
+  <div class="row">
+      <table class="table table-sm">
+          <thead>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Details</th>
+          </thead>
+          <tbody>
+              {% for item in items %}
+              <tr>
+                  <td><img src="{{ url_for('static', filename='images/' + item.image) }}" width="auto" height="100px"/></td>
+                  <td>{{item.title}}</td>
+                  <td>{{item.description}}</td>
+                  {% if item.purchase_price %}<td>${{item.purchase_price}}.00</td>
+                  {% else %}<td>No price</td>{% endif %}
+                  <td><a href="/listing/{{item.id}}" class='btn btn-sm'>Details</a></td>
+              </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+    </div>
+  </div>
+{% else %}
+<p> No items are available at this time. Try listing some!</p>
+{% endif %}
 {% endblock %}

@@ -1,6 +1,7 @@
 from sqlalchemy import true
 from app import db
 from app import myobj
+from app import search
 from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Bid, Listing, User
 from app.utils import allowed_file, MergeDicts
@@ -13,7 +14,8 @@ from werkzeug.utils import secure_filename
 # homepage
 @myobj.route("/")
 def home():
-    return render_template("homepage.html")
+    items = Listing.query.all()
+    return render_template("homepage.html", items = items)
 
 # login page
 @myobj.route("/login", methods=["GET", "POST"])
@@ -68,17 +70,19 @@ def edit_profile():
 
         current_user.user_profile = user_bio
         db.session.commit()
-        return redirect("/")
-        
-    return render_template("editprofile.html", username=current_user.username, bio_form=bio_form)
+        return redirect(f"/profile/{current_user.username}")
+
+    return render_template("editprofile.html", username=current_user.username, form=form)
 
 # profile page displays username, bio, and collection of valid users
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
+        if user == current_user:
+            return render_template( "profile.html", username=user.username, bio=user.user_profile, items=user.collection, show_buttons=True)
         return render_template(
-            "profile.html", username=user.username, bio=user.user_profile, collection=user.collection)
+            "profile.html", username=user.username, bio=user.user_profile, items=user.collection)
     else:
         flash("No such user")
         return redirect("/")
@@ -88,6 +92,7 @@ def profile(username):
 @login_required
 def logout():
     logout_user()
+    session.clear()
     return redirect("/login")
 
 @myobj.route("/delete", methods=["GET", "POST"])
@@ -142,17 +147,24 @@ def new_listing():
             l = Listing(
                 title=form.title.data,
                 description=form.description.data,
+                seller_id=current_user.id,
+                image=filename,
                 for_purchase=form.for_purchase.data,
                 purchase_price=form.purchase_price.data,
                 for_auction=form.for_auction.data,
                 auction_end=form.auction_end.data,
-                image=filename,
             )
             db.session.add(l)
             db.session.commit()
 
             return redirect("/listing/" + str(l.id))
     return render_template("newlisting.html", title="New Listing", form=form)
+
+@myobj.route("/search")
+def searchresult():
+    searchword = request.args.get('q')
+    items = Listing.query.msearch(searchword, fields = ['title', 'description', 'purchase_price'], limit=10)
+    return render_template('search.html', items=items, q=searchword)
 
 @myobj.route("/listing/<listing_id>", methods=["GET", "POST"])
 def display_listing(listing_id):
@@ -167,7 +179,12 @@ def display_listing(listing_id):
         # Handle bidding for auctionable items
         if listing.for_auction is True:
 
-            highest_bid = listing.bids.order_by(Bid.value.desc()).first()
+            # If any bids, find highest bid from existing user
+            all_bids = listing.bids.order_by(Bid.value.desc())
+            for bid in all_bids:
+                if bid.bidder is not None:
+                    highest_bid = bid
+                    break
             if highest_bid is None:
                 highest_bid = Bid(value=0)
 
@@ -205,7 +222,7 @@ def display_listing(listing_id):
             # Auction has ended, do not accept bids
             else:
                 # Someone won the auction, only they should see checkout
-                if highest_bid.bidder is not None:
+                if highest_bid.value > 0:
                     if current_user == highest_bid.bidder:
                         return render_template(
                             "listing.html",
@@ -233,7 +250,7 @@ def display_listing(listing_id):
                             winner=True,
                             checkout=False
                         )
-        # Either no auction or auction ended with no bids
+        # Either no auction or auction ended with no valid bids
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
@@ -262,11 +279,11 @@ def AddCart():
                 "price": price,
                 "description": product.description,
                 "quantity": quantity,
+                "image": product.image,
             }
         }
         # if there is already something in the cart
         if "Shoppingcart" in session:
-            print(session["Shoppingcart"])
             # trying to add the same item twice
             if listing_id in session["Shoppingcart"]:
                 flash("This product is already in your cart")
@@ -292,7 +309,7 @@ def display_cart():
     grandtotal = 0
     # table in cart.html pulls all values accordingly and the grandtotal is calculated as well
     for key, item in session["Shoppingcart"].items():
-        grandtotal += float(item["price"]) * float(item["quantity"])
+        grandtotal += int(float(item["price"])) * int(float(item["quantity"]))
     return render_template(
         "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
     )

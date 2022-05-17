@@ -7,7 +7,7 @@
     <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand">Navbar</a>
+          <a class="navbar-brand">FreEbay</a>
           <div class="navbar-nav">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
             <a class="nav-link" href="/signup">Sign Up</a>
@@ -15,16 +15,20 @@
             <a class="nav-link" href="/logout">Logout</a>
             <a class="nav-link" href="/profile/edit">My Profile</a>
             <a class="nav-link" href="/newlisting">Create Listing</a>
+            {% if current_user.username %}
+            <a class="nav-link" href="/profile/{{current_user.username}}/">Profile</a>
+            {% endif %}
             <a class="nav-link" href="/cart">Cart ({{session['Shoppingcart']|length}})</a>
           </div>
-          <form class="d-flex input-group w-auto">
+          <form class="d-flex input-group w-auto" action="/search">
             <input
               type="search"
               class="form-control rounded"
               placeholder="Search"
               aria-label="Search"
-              aria-describedby="search-addon"
+              name = 'q'
             />
+            <button class="d-flex btn my-sm-0" type="submit">Search</button>
             <span class="input-group-text border-0" id="search-addon">
               <i class="fas fa-search"></i>
             </span>
