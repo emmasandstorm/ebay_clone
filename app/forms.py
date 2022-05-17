@@ -28,12 +28,8 @@ class UserBioForm(FlaskForm):
     user_bio = StringField("Biography", validators = [DataRequired()])
     submit = SubmitField("Save Bio")
 
-<<<<<<< HEAD
-=======
-
 class EditBioForm(FlaskForm):
     submit = SubmitField("Edit Bio")
->>>>>>> 6a4e12b8fb3f4ef1713ae42f75bce26952c38f93
 
 class ListingForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
