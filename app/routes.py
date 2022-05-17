@@ -72,7 +72,7 @@ def edit_profile():
 
         current_user.user_profile = user_bio
         db.session.commit()
-        return redirect("/")
+        return redirect(f"/profile/{current_user.username}")
 
     return render_template("editprofile.html", username=current_user.username, form=form)
 
