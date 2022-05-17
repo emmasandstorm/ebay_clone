@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_msearch import Search
 import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -16,6 +17,8 @@ myobj.config.from_mapping(
 db = SQLAlchemy(myobj)
 login = LoginManager(myobj)
 login.login_view = "/login"
+search = Search()
+search.init_app(myobj)
 
 from app import routes
 from app import exceptions

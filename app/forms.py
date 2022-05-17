@@ -1,5 +1,4 @@
-from wsgiref.validate import validator
-from app.validators import RequiredIf
+from app.validators import OptionalIfFieldEqualTo
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import (
@@ -29,6 +28,12 @@ class UserBioForm(FlaskForm):
     user_bio = StringField("Biography", validators = [DataRequired()])
     submit = SubmitField("Save Bio")
 
+<<<<<<< HEAD
+=======
+
+class EditBioForm(FlaskForm):
+    submit = SubmitField("Edit Bio")
+>>>>>>> 6a4e12b8fb3f4ef1713ae42f75bce26952c38f93
 
 class ListingForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
@@ -37,14 +42,14 @@ class ListingForm(FlaskForm):
     purchase_price = IntegerField(
         "Purchase Price",
         validators=[
-            RequiredIf(for_purchase=True),
+            OptionalIfFieldEqualTo(other_field_name='for_purchase', value=False),
             NumberRange(
                 min=0, max=1000000, message="Price must be between 0 and 1000000."
             ),
         ],
     )
     for_auction = BooleanField("Accept Bids")
-    auction_end = DateField("Until", validators=[RequiredIf(for_auction=True)])
+    auction_end = DateField("Until", validators=[])
     image = FileField("Image", validators=[FileRequired()])
     submit = SubmitField("Create Listing")
 

@@ -2,5 +2,55 @@
 {% block title %} My Account {% endblock %}
 {% block head %}<h1>{{username}}'s Profile</h1>{% endblock %}
 {% block content %} 
-    <p>{{bio}}</p>
+<link rel = "stylesheet" href = '/static/listingcard.css'>
+<h2>About {{username}}:</h2>   
+{% if bio %} 
+<p>{{bio}}</p>
+{% else %}
+<p>Go to /profile/edit/ to set your bio!</p>
+{% endif %}
+{% if show_buttons %}
+    <form action = "" method="POST" >  
+        {{ form.hidden_tag() }}
+            {{ form.submit }}
+    </form>
+{% endif %}
+<hr>
+<div class = 'head-sm'> {{username}}'s Collection
+</div>
+{% if items.first() %}
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Details</th>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" width="auto" height="100px"/></td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.description}}</td>
+                    <td><a href="/listing/{{item.id}}" class='btn btn-sm'>Details</a></td>
+                </tr>
+                {% endfor %}
+
+            
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<p>No items to display in your collection, try buying some!</p>
+{% endif %}
+
+{% if show_buttons %}
+    <p>Press the button below to permanently, irretrievably delete your account</p>
+    <form action = "/delete/{{username}}/" method="POST" > 
+        <button type="submit" class="btn btn-delete">Delete Account</button>
+    </form>
+{% endif %}
 {% endblock %}

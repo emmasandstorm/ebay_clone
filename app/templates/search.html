@@ -1,0 +1,43 @@
+{% extends "base.html"%}
+{% block title %} Search result {% endblock %}
+{% block content %} 
+
+<html>
+<head>
+    <link rel = "stylesheet" href = '/static/listingcard.css'>
+  <div class = "title">
+    <h1>Showing results for "{{q}}"</h1>
+  </div>
+</head>
+
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Details</th>
+            </thead>
+            <tbody>
+                {% if items %}
+                {% for item in items %}
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/' + item.image) }}" width="auto" height="100px"/></td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.description}}</td>
+                    <td>${% if item.purchase_price %}{{item.purchase_price}}{%else%}0{%endif%}.00</td>
+                    <td><a href="/listing/{{item.id}}" class='btn btn-sm'>Details</a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <p> No items match that description. You're outta luck</p>
+                {% endif %}
+            
+            </tbody>
+        </table>
+</html>
+
+
+{%endblock content%}

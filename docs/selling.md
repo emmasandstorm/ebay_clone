@@ -14,4 +14,4 @@ If the user chooses that the listing is available for immediate purchase, a text
 
 ### For Auction
 
-Items listed for auction open for bidding as soon as the listing is created. Bidding continues until midnight UTC on the end date (as in before dawn) supplied by the seller. See Auctions for more information.
+Items listed for auction open for bidding as soon as the listing is created. Bidding continues until midnight (as in before dawn) on the end date supplied by the seller. See Auctions for more information.

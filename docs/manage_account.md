@@ -2,15 +2,20 @@
 
 The user system is a database that consists of a user id, user submitted username and password. The password automatically generates a password_hash that is used to check the password when logging in.
 
-Also included in the user database is the relationship of being a buyer. Once a customer makes a purchase, their user id is tied to that listing and they're now marked as the buyer of the listing. This allows the user to view all past purchases (coming soon).
+Also included in the user database is the relationship of being a buyer. Once a customer makes a purchase, their user id is tied to that listing and they're now marked as the buyer of the listing. This allows the user to view all past purchases.
 
 ## Create Account
 
 Users create new accounts from the signup page. Choose a unique username and any password, then press Register. Your credentials will be stored in the database, and now you can log in!
 
+## User Profile
+
+All user profiles are located at /profile/<username\>/. Your user profile displays your username, bio, and collection of purchased items. Click Profile in the top bar to go to your profile!
+
+Profiles also have bios, which you can fill in by clicking on the Edit Bio button.
 ## Delete Account
 
-Account deletion coming soon
+To delete your account, press the red Delete Account button at the bottom of the page. Be careful, this action will not be confirmed and cannot be reversed. 
 
 ## Login
 
@@ -30,7 +35,3 @@ If everything is matching, the system will log you in and grant you access to mu
 You must be logged in to logout.
 
 To logout, you must press the logout button on the navbar. It will redirect you to a logout page. If you are not logged in, you will be redirected to the login page so you can logout. If you are logged in, the system will log you out of the session and take you back to the login page.
-
-## User Profile
-
-How to view and edit your own user profile (coming soon).

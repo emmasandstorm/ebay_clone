@@ -9,6 +9,10 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     user_profile = db.Column(db.String(256))
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 6a4e12b8fb3f4ef1713ae42f75bce26952c38f93
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
     bids = db.relationship("Bid", backref="bidder", lazy="dynamic")
 
@@ -23,22 +27,26 @@ class User(UserMixin, db.Model):
 
 
 class Listing(db.Model):
+    __searchable__= ['title','description', 'purchase_price']
     id = db.Column(db.Integer, primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow())
     title = db.Column(db.String(128))
     description = db.Column(db.String(256))
+    seller_id = db.Column(db.Integer)
+    image = db.Column(
+        db.String(256)
+    )  # store the file name since all images are in the same directory
+    
     for_purchase = db.Column(db.Boolean, default=False)
     purchase_price = db.Column(
         db.Integer
     )  # Dollars only, working with cents presents too many questions
     for_auction = db.Column(db.Boolean, default=False)
     auction_end = db.Column(db.DateTime)
-    image = db.Column(
-        db.String(256)
-    )  # store the file name since all images are in the same directory
     sold = db.Column(db.Boolean, default=False)
 
     buyer_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
     bids = db.relationship("Bid", backref="listing", lazy="dynamic")
 
     def __repr__(self):

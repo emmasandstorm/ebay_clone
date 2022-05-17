@@ -9,3 +9,6 @@ site/*
 
 #Do not store images in version control
 app/static/images/*
+
+#Do not store venv files in version control
+venv/*
