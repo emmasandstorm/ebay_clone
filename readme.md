@@ -17,12 +17,12 @@ Install dependencies:
 In the terminal, in the same directory, execute `pip install -r requirements.txt`
 
 To build the database:
-In the terminal, navigate to the directory containing run.py and execute `python3 create_db.py`
+In the terminal, in the same directory, execute`python3 create_db.py`
 
 To run server:
-In the terminal, navigate to the directory containing run.py and execute `python3 run.py`
+In the terminal, in the same directory, execute `python3 run.py`
 
-You only have to build the database once, to restart the webserver enter Ctrl+C in the terminal followed by `python3 run.py`
+You only have to install dependencies and build the database once, to restart the webserver enter Ctrl+C in the terminal followed by `python3 run.py`
 
 
 ## For MVP:

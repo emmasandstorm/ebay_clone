@@ -1,10 +1,10 @@
 # Auctions
 
-Sellers may enable auctions on their listing at the time of listing creation. Auctions begin when the listing is created and end at midnight UTC on the date the seller selects. While the auction is live, it will accept bids from all logged in users.
+Sellers may enable auctions on their listing at the time of listing creation. Auctions begin when the listing is created and end at midnight on the date the seller selects. While the auction is live, it will accept bids from all logged in users.
 
 ## Finding Listings
 
-Search coming in future updates.
+Listings are visible on the home page and may be searched by title and description.
 
 ## Bidding
 
@@ -12,5 +12,5 @@ The process of bidding is straightforward. Simply navigate to a listing that is 
 
 ## Checkout
 
-Cart, checkout, and purchased listings are the same as buying. We will update this section to link to the buying page.
+Cart, checkout, and purchased listings are the same as [buying](buying.md).
 

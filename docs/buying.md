@@ -4,7 +4,7 @@ Buying a listing consists of searching for a listing, examining its details on t
 
 ## Finding Listings
 
-Search coming in future updates.
+Listings are visible on the home page and may be searched by title and description.
 
 ## Cart
 
@@ -29,4 +29,4 @@ On the checkout page, simply enter fake credit card information (please do not u
 
 ## Purchased Listings
 
-To see listings you own, navigate to the appropriate listing page. Your username will be displayed at the top!
+To see listings you own, navigate to your user [profile](manage_account.md).
