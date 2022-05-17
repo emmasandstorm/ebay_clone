@@ -2,7 +2,7 @@ from sqlalchemy import true
 from app import db
 from app import myobj
 from app import search
-from app.forms import AuctionForm, CreditCardForm, ListingForm, LoginForm, SignUpForm, UserBioForm
+from app.forms import AuctionForm, CreditCardForm, EditBioForm, ListingForm, LoginForm, SignUpForm, UserBioForm
 from app.models import Bid, Listing, User
 from app.utils import allowed_file, MergeDicts
 from datetime import datetime
@@ -79,10 +79,16 @@ def edit_profile():
 # profile page displays username, bio, and collection of valid users
 @myobj.route("/profile/<username>/", methods=["GET", "POST"])
 def profile(username):
+    form = EditBioForm()
+
+    if form.validate_on_submit():
+        print("validated!")
+        return redirect("/profile/edit")
     user = User.query.filter_by(username=username).first()
+
     if user is not None:
         if user == current_user:
-            return render_template( "profile.html", username=user.username, bio=user.user_profile, items=user.collection, show_buttons=True)
+            return render_template( "profile.html", username=user.username, bio=user.user_profile, items=user.collection, show_buttons=True, form=form)
         return render_template(
             "profile.html", username=user.username, bio=user.user_profile, items=user.collection)
     else:

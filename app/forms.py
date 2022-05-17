@@ -29,6 +29,9 @@ class UserBioForm(FlaskForm):
     submit = SubmitField("Save Bio")
 
 
+class EditBioForm(FlaskForm):
+    submit = SubmitField("Edit Bio")
+
 class ListingForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])

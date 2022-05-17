@@ -10,8 +10,9 @@
 <p>Go to /profile/edit/ to set your bio!</p>
 {% endif %}
 {% if show_buttons %}
-    <form action = "/profile/edit" method="POST" >  
-        <button type="submit" class="btn">Edit Bio</button>
+    <form action = "" method="POST" >  
+        {{ form.hidden_tag() }}
+            {{ form.submit }}
     </form>
 {% endif %}
 <hr>
