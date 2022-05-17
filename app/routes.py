@@ -72,7 +72,7 @@ def edit_profile():
 
         current_user.user_profile = user_bio
         db.session.commit()
-        return redirect("/")
+        return redirect(f"/profile/{current_user.username}")
 
     return render_template("editprofile.html", username=current_user.username, form=form)
 
@@ -81,6 +81,8 @@ def edit_profile():
 def profile(username):
     user = User.query.filter_by(username=username).first()
     if user is not None:
+        if user == current_user:
+            return render_template( "profile.html", username=user.username, bio=user.user_profile, items=user.collection, show_buttons=True)
         return render_template(
             "profile.html", username=user.username, bio=user.user_profile, items=user.collection)
     else:
@@ -178,7 +180,12 @@ def display_listing(listing_id):
         # Handle bidding for auctionable items
         if listing.for_auction is True:
 
-            highest_bid = listing.bids.order_by(Bid.value.desc()).first()
+            # If any bids, find highest bid from existing user
+            all_bids = listing.bids.order_by(Bid.value.desc())
+            for bid in all_bids:
+                if bid.bidder is not None:
+                    highest_bid = bid
+                    break
             if highest_bid is None:
                 highest_bid = Bid(value=0)
 
@@ -216,7 +223,7 @@ def display_listing(listing_id):
             # Auction has ended, do not accept bids
             else:
                 # Someone won the auction, only they should see checkout
-                if highest_bid.bidder is not None:
+                if highest_bid.value > 0:
                     if current_user == highest_bid.bidder:
                         return render_template(
                             "listing.html",
@@ -244,7 +251,7 @@ def display_listing(listing_id):
                             winner=True,
                             checkout=False
                         )
-        # Either no auction or auction ended with no bids
+        # Either no auction or auction ended with no valid bids
         return render_template(
             "listing.html",
             title=f"Listing {listing_id}",
@@ -278,7 +285,6 @@ def AddCart():
         }
         # if there is already something in the cart
         if "Shoppingcart" in session:
-            print(session["Shoppingcart"])
             # trying to add the same item twice
             if listing_id in session["Shoppingcart"]:
                 flash("This product is already in your cart")
@@ -304,7 +310,7 @@ def display_cart():
     grandtotal = 0
     # table in cart.html pulls all values accordingly and the grandtotal is calculated as well
     for key, item in session["Shoppingcart"].items():
-        grandtotal += float(item["price"]) * float(item["quantity"])
+        grandtotal += int(float(item["price"])) * int(float(item["quantity"]))
     return render_template(
         "cart.html", total=session["Shoppingcart"], grandtotal=grandtotal
     )

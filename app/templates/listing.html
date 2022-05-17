@@ -2,7 +2,7 @@
 {% block title %} {{title}} {% endblock%}
 {% block head %}<div class="listing">{{title}}
   {% if listing.sold %}
-  - SOLD to {{listing.buyer.username}}
+  - SOLD to {% if listing.buyer.username %}{{listing.buyer.username}}{% else %}a deleted user!{% endif %}
   {% endif %}
 </div>
 <link rel = "stylesheet" href = '/static/listingcard.css'>

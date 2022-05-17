@@ -27,6 +27,10 @@
     width: 50%;
 }
 
+.btn-delete {
+    background-color: red;
+}
+
 .listing {
     font-size: medium;
     color:black;

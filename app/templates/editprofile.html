@@ -2,6 +2,7 @@
 {% block title %} "Edit My Profile" {% endblock %}
 {% block head %}<h1>{{username}}'s Bio</h1>{% endblock %}
 {% block content %} 
+<link rel = "stylesheet" href = '/static/listingcard.css'>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <p>
