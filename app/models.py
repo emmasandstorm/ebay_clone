@@ -9,10 +9,6 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
     user_profile = db.Column(db.String(256))
-<<<<<<< HEAD
-=======
-    
->>>>>>> 6a4e12b8fb3f4ef1713ae42f75bce26952c38f93
     collection = db.relationship("Listing", backref="buyer", lazy="dynamic")
     bids = db.relationship("Bid", backref="bidder", lazy="dynamic")
 

@@ -1,23 +1,38 @@
 {% extends "base.html"%}
 {% block title %} My Account {% endblock %}
-{% block head %}<h1>{{username}}'s Profile</h1>{% endblock %}
+{% block head %}
+    <div class = "title">
+        <h1>{{username}}'s Profile</h1>
+    </div>
+{% endblock %}
 {% block content %} 
 <link rel = "stylesheet" href = '/static/listingcard.css'>
-<h2>About {{username}}:</h2>   
-{% if bio %} 
-<p>{{bio}}</p>
-{% else %}
-<p>Go to /profile/edit/ to set your bio!</p>
-{% endif %}
-{% if show_buttons %}
-    <form action = "" method="POST" >  
-        {{ form.hidden_tag() }}
-            {{ form.submit }}
-    </form>
-{% endif %}
-<hr>
-<div class = 'head-sm'> {{username}}'s Collection
+<div class = "h1">
+    <h2>About {{username}}:</h2>
+</div>  
+
+<div class = "bio">
+    {% if bio %} 
+    <div class = "normal">
+        <normal>{{bio}}</normal>
+    </div>  
+    {% else %}
+    <p>Go to /profile/edit/ to set your bio!</p>
+    {% endif %}
+    {% if show_buttons %}
+        <form action = "" method="POST" >  
+            {{ form.hidden_tag() }}
+                {{ form.submit }}
+        </form>
+    {% endif %}
 </div>
+
+<hr>
+
+<div class = "h1">
+    <h2>{{username}}'s Collection</h2>
+</div>
+
 {% if items.first() %}
 <div class="container">
     <div class="row">

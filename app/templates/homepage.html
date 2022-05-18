@@ -1,13 +1,10 @@
 {% extends "base.html" %}
-{% block title %} FreEbay Home {% endblock %}
+{% block title %} Home {% endblock %}
 {% block content %}
-<head>
-  <div class = "title">
-    <h1>Welcome to FreEbay!!</h1>
-  </div>
   <link rel = "stylesheet" href = '/static/listingcard.css'>
 
-</head>
+  <div class = "title"> Welcome!
+  </div>
 
   <div class = 'p'> First time? Please sign up! <form action = "/signup" method="GET" >  
     <button type="submit" class="btn-sm">Register</button>
@@ -23,7 +20,7 @@
 
 
 <hr>
-<div class = 'head-sm'> Current Items for Sale
+<div class = "h1"> Current Items for Sale
 </div>
 {% if items %}
 <div class="container">
