@@ -1,8 +1,15 @@
 .title{
+    padding: 30px;
+    text-align: center;
     color: #Cf5c36;
     font-size: 80px;
-    font-style: Georgia, Georgia, 'Times New Roman', Times, serif;
-    padding: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-variant: small-caps;
+    letter-spacing: 1.4px;
+    word-spacing: 0.6px;
+    text-decoration: underline #Cf5c36;
+    text-shadow: 1px 0 #Cf5c36;
 }
 
 .head-sm {
@@ -16,19 +23,76 @@
     color: white;
 }
 
+.bio {
+    border: 10px solid #000000;
+    border-style: ridge;
+    background-color: #eee5e9;
+    text-align: left;
+    padding: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.button{
+    color: rgb(255, 255, 255); 
+    font-size: 16px; line-height: 16px; 
+    padding: 16px; 
+    border-radius: 10px; 
+    font-family: "Times New Roman", Times, serif; 
+    font-weight: 700;  
+    font-variant: small-caps; 
+    background-image: radial-gradient(circle, rgba(171,171,172,1) 0%, rgba(124,124,124,1) 100%); 
+      border: 5px, #444444;
+      box-shadow: rgb(82, 82, 82) 1px 1px 5px 1px; 
+    display: inline-block;
+  }
+
+
+.h1{
+    padding: 30px;
+    text-align: justify;
+    color: #Cf5c36;
+    font-size: 50px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-variant: small-caps;
+    letter-spacing: 1.4px;
+    word-spacing: 0.6px;
+    text-decoration: underline #Cf5c36;
+    text-shadow: 1px 0 #Cf5c36;
+}
+
+
 .btn-sm {
-    background-color: #7c7c7c;
     color: white;
     padding: 10px 10px;
     margin-left: 10px;
     margin-right: 10px;
-    border: none;
     cursor: pointer;
     width: 50%;
+    font-size: 16px; line-height: 16px; 
+    border-radius: 10px; 
+    font-family: "Times New Roman", Times, serif; 
+    font-weight: 700;  
+    font-variant: small-caps; 
+    background-image: radial-gradient(circle, rgba(171,171,172,1) 0%, rgba(124,124,124,1) 100%); 
+      border: 5px, #444444;
+      box-shadow: rgb(82, 82, 82) 1px 1px 5px 1px; 
+    display: inline-block;
+    align-self: 50%;
 }
 
 .btn-delete {
-    background-color: red;
+    color: rgb(255, 255, 255); 
+    font-size: 16px; line-height: 16px; 
+    padding: 16px; 
+    border-radius: 10px; 
+    font-family: "Times New Roman", Times, serif; 
+    font-weight: 700;  
+    font-variant: small-caps; 
+    background-image: radial-gradient(circle, rgba(168, 0, 0, 0.815) 0%, rgb(121, 0, 0) 100%); 
+      border: 5px, #380000;
+      box-shadow: rgb(44, 0, 0) 1px 1px 5px 1px; 
+    display: inline-block;
 }
 
 .listing {
@@ -38,6 +102,7 @@
 }
 
 .p {
+    text-align: center;
     margin-left: 100px;
     font-size: 20px;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -52,6 +117,13 @@ body {
     background-color: #efc88b;
 }
 
+.normal{
+    font-family: Georgia, Georgia, 'Times New Roman', Times, serif;
+    font-size: 20;
+    color:black;
+    text-align: left;
+    margin-bottom: 2%;
+}
 
 th, td {
     border-bottom: 2px solid #7c7c7c;

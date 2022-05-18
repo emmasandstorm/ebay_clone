@@ -28,7 +28,6 @@ class UserBioForm(FlaskForm):
     user_bio = StringField("Biography", validators = [DataRequired()])
     submit = SubmitField("Save Bio")
 
-
 class EditBioForm(FlaskForm):
     submit = SubmitField("Edit Bio")
 

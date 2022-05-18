@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %} {{title}} {% endblock%}
-{% block head %}<div class="listing">{{title}}
+{% block head %}<div>
   {% if listing.sold %}
   - SOLD to {% if listing.buyer.username %}{{listing.buyer.username}}{% else %}a deleted user!{% endif %}
   {% endif %}
@@ -12,7 +12,7 @@
   <div class = 'title'>{{listing.title}}</div>
   {% if filename %}
   <div class="image">
-    <img src='{{ url_for("static", filename="images/" + filename) }}' />
+    <img src='{{ url_for("static", filename="images/" + filename) }}' width="auto" height="300px" margin="50%"/>
   </div>
   {% endif %}
   <p>{{description}}</p>

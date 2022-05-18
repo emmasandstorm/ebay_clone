@@ -39,7 +39,6 @@ def login():
             flash("Failed login")
     return render_template("login.html", form=form)
 
-
 @myobj.route("/signup", methods=["GET", "POST"])
 def sign_up():
     form = SignUpForm()
